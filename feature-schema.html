@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Feature Schema - ISU-Challenge</title>
+<meta name="description" content="Feature schema for ISU-Challenge: benchmarking vision-language models for in-car scene understanding.">
+<link rel="icon" href="logos/isu-logo.webp" type="image/webp">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<style>
+  :root{
+    --bg:#f4f6f9;
+    --surface:#ffffff;
+    --surface-2:#eef1f6;
+    --line:#dbe1ea;
+    --text:#161b22;
+    --muted:#5b6472;
+    --accent:#c97a00;
+    --accent-fill:#ffb020;
+    --on-accent:#1a1200;
+    --track-a:#0f7aa8;
+    --track-a-fill:#e4f3fa;
+    --track-b-fill:#fff3e0;
+    --shadow: 0 1px 0 rgba(20,25,35,.04);
+    --radius-s:6px;
+    --radius-m:12px;
+    --font-display:'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-headline:'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-body:'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono:'JetBrains Mono', 'SF Mono', Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0b0f14;
+      --surface:#141a22;
+      --surface-2:#1a212b;
+      --line:#262f3d;
+      --text:#e8ecf3;
+      --muted:#8e97a8;
+      --accent:#ffb020;
+      --accent-fill:#ffb020;
+      --on-accent:#1a1200;
+      --track-a:#54c2ee;
+      --track-a-fill:#122733;
+      --track-b-fill:#26200f;
+      --shadow: 0 1px 0 rgba(0,0,0,.3);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0b0f14;
+    --surface:#141a22;
+    --surface-2:#1a212b;
+    --line:#262f3d;
+    --text:#e8ecf3;
+    --muted:#8e97a8;
+    --accent:#ffb020;
+    --accent-fill:#ffb020;
+    --on-accent:#1a1200;
+    --track-a:#54c2ee;
+    --track-a-fill:#122733;
+    --track-b-fill:#26200f;
+    --shadow: 0 1px 0 rgba(0,0,0,.3);
+  }
+
+  *{box-sizing:border-box;}
+  html{color-scheme:light dark;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--font-body);
+    font-size:16.5px;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  img{max-width:100%;}
+  [hidden]{display:none !important;}
+  a{color:var(--accent);}
+  a:focus-visible, button:focus-visible, summary:focus-visible, details:focus-visible{
+    outline:2px solid var(--accent-fill);
+    outline-offset:2px;
+  }
+  h1,h2,h3,h4{
+    font-family:var(--font-headline);
+    font-weight:700;
+    letter-spacing:-0.01em;
+    text-wrap:balance;
+    margin:0;
+    color:var(--text);
+  }
+  p{margin:0;}
+  ul,ol{margin:0;padding:0;}
+  li{list-style:none;}
+  code, .mono{font-family:var(--font-mono);}
+  .container{max-width:1180px;margin:0 auto;padding:0 28px;}
+  @media (max-width:640px){.container{padding:0 18px;}}
+
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:var(--font-mono);
+    font-size:12px;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:14px;
+  }
+  .bracket{width:12px;height:12px;stroke:currentColor;stroke-width:1.5;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+
+  header{
+    border-bottom:1px solid var(--line);
+    padding:16px 0;
+    position:sticky;
+    top:0;
+    background:var(--surface);
+    z-index:100;
+  }
+  header nav{
+    display:flex;
+    gap:28px;
+    align-items:center;
+  }
+  header a{
+    text-decoration:none;
+    font-size:14px;
+    font-weight:500;
+    color:var(--text);
+  }
+  header a:hover{
+    color:var(--accent);
+  }
+
+  section{
+    padding:80px 0;
+  }
+  .section-head{
+    margin-bottom:48px;
+  }
+  .section-head h2{
+    font-size:42px;
+    margin-top:12px;
+    margin-bottom:16px;
+  }
+  .section-head p{
+    font-size:18px;
+    color:var(--muted);
+    max-width:600px;
+  }
+
+  /* ---------- Feature schema ---------- */
+  .schema-scroll{overflow-x:auto;border:1px solid var(--line);border-radius:var(--radius-m);}
+  table.schema{width:100%;border-collapse:collapse;min-width:720px;background:var(--surface);}
+  table.schema caption{caption-side:top;text-align:left;padding:14px 16px 4px;font-family:var(--font-mono);font-size:11.5px;color:var(--muted);}
+  table.schema thead th{
+    padding:9px 14px;border-bottom:2px solid var(--line);text-align:left;font-size:11.5px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;
+  }
+  table.schema td{padding:9px 14px;border-bottom:1px solid var(--line);font-size:13px;vertical-align:top;}
+  table.schema tr:last-child td{border-bottom:none;}
+  table.schema tr.group-row td{
+    padding:14px;background:var(--surface-2);font-weight:600;color:var(--text);border-bottom:1px solid var(--line);
+  }
+  table.schema tr.group-row:first-child td{border-top:1px solid var(--line);}
+  table.schema td.feat code{font-weight:600;}
+  table.schema td.vals{font-family:var(--font-mono);font-size:12px;color:var(--muted);}
+  table.schema td.desc{color:var(--muted);}
+
+  footer{
+    border-top:1px solid var(--line);
+    padding:40px 0;
+    text-align:center;
+    font-size:13px;
+    color:var(--muted);
+  }
+  footer a{
+    text-decoration:none;
+    color:var(--accent);
+  }
+  footer a:hover{
+    text-decoration:underline;
+  }
+  .footer-links{
+    display:flex;
+    gap:24px;
+    margin-top:16px;
+    flex-wrap:wrap;
+  }
+  .footer-links a{
+    font-size:13px;
+    text-decoration:none;
+  }
+  .footer-links a:hover{
+    text-decoration:underline;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <nav>
+      <a href="index.html">← Back to main</a>
+    </nav>
+  </div>
+</header>
+
+<section id="features">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow"><svg class="bracket" viewBox="0 0 12 12"><path d="M1 4V1h3M11 4V1H8M1 8v3h3M11 8v3H8"/></svg>Feature schema</span>
+      <h2>One schema, four seats, thirty-eight signals.</h2>
+      <p>Every scene is described by this feature set — the questions Track B must answer, and the ground truth Track A must preserve. Values are <code class="mono">null</code> when the corresponding seat, passenger, or object isn't present. Track A and B notebooks each evaluate only the subset relevant to that track.</p>
+    </div>
+    <div class="schema-scroll">
+      <table class="schema" id="schema-table">
+        <caption>Values are <code>null</code> when the seat, passenger, or object is absent.</caption>
+        <thead><tr><th>Feature</th><th>Values</th><th>Description</th></tr></thead>
+        <tbody id="schema-body"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p><a href="index.html">← Back to ISU-Challenge main page</a></p>
+    <div class="footer-links">
+      <a href="https://huggingface.co/datasets/ISU-Test/isu-challenge-dataset" target="_blank" rel="noopener">Dataset ↗</a>
+      <a href="https://github.com/isu-challenge/Starterkit-ICSE-2027" target="_blank" rel="noopener">Starter Kit ↗</a>
+      <a href="https://www.kaggle.com/competitions/isu-challenge-2027" target="_blank" rel="noopener">Kaggle ↗</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+var SCHEMA = [
+    ["Environment", [
+      ["env",["URBAN","HIGHWAY","NATURE","COUNTRYSIDE"],"Scene environment."],
+      ["env_strength",["0.5","1.0"],"Environment intensity."],
+      ["exposure_compensation",["0.0","2.0"],"Camera exposure compensation."]
+    ]],
+    ["Driver", [
+      ["driver_gender",["MALE","FEMALE"],"Driver gender."],
+      ["driver_tshirt_color",["BLACK","WHITE"],"Driver shirt color."],
+      ["driver_emotion",["HAPPY","SERIOUS"],"Driver facial expression."],
+      ["driver_phone",["NO","YES"],"Whether the driver is using a phone."],
+      ["driver_safety_belt",["NO","YES"],"Driver safety-belt status."],
+      ["driver_height_m",["1.6","2.0"],"Driver height in meters."],
+      ["driver_weight_kg",["50","100"],"Driver weight in kilograms."]
+    ]],
+    ["Codriver (front-right)", [
+      ["passenger_codriver",["NO","YES"],"Whether the front-right passenger seat is occupied."],
+      ["passenger_codriver_tshirt_color",["BLACK","WHITE"],"Codriver shirt color."],
+      ["passenger_codriver_emotion",["HAPPY","SERIOUS"],"Codriver facial expression."],
+      ["passenger_codriver_head_angle",["-45","...","45"],"Codriver head angle in degrees (7 steps)."],
+      ["codriver_safety_belt",["NO","YES"],"Codriver safety-belt status."]
+    ]],
+    ["Rear-left passenger", [
+      ["passenger_back_seat_left",["NO","YES"],"Whether the rear-left seat is occupied."],
+      ["passenger_rear_left_tshirt_color",["BLACK","WHITE"],"Rear-left passenger shirt color."],
+      ["passenger_rear_left_emotion",["HAPPY","SERIOUS"],"Rear-left passenger facial expression."],
+      ["passenger_rear_left_head_angle",["-45","...","45"],"Rear-left head angle in degrees (7 steps)."],
+      ["passenger_rear_left_safety_belt",["NO","YES"],"Rear-left safety-belt status."]
+    ]],
+    ["Rear-right passenger", [
+      ["passenger_back_seat_right",["NO","YES"],"Whether the rear-right seat is occupied."],
+      ["passenger_rear_right_tshirt_color",["BLACK","WHITE"],"Rear-right passenger shirt color."],
+      ["passenger_rear_right_emotion",["HAPPY","SERIOUS"],"Rear-right passenger facial expression."],
+      ["passenger_rear_right_head_angle",["-45","...","45"],"Rear-right head angle in degrees (7 steps)."],
+      ["passenger_rear_right_safety_belt",["NO","YES"],"Rear-right safety-belt status."]
+    ]],
+    ["Objects", [
+      ["phone_codriver_seat",["NO","YES"],"Whether a phone is present on the codriver seat."],
+      ["phone_codriver_seat_color",["BLACK","WHITE"],"Phone color."],
+      ["colabottle_codriver_seat",["NO","YES"],"Whether a cola bottle is present on the codriver seat."],
+      ["colacan_codriver_seat",["NO","YES"],"Whether a cola can is present on the codriver seat."],
+      ["suitcase",["NO","YES"],"Whether a suitcase is present."],
+      ["suitcase_color",["ANTRACITE","YELLOW"],"Suitcase color."],
+      ["suitcase_location",["CO_DRIVER_SEAT","REAR_SEAT"],"Suitcase location."],
+      ["suitcase_pose",["UPWARDS","FLAT"],"Suitcase orientation."]
+    ]],
+    ["Child safety", [
+      ["baby_seat",["NO","YES"],"Whether a baby seat is present."],
+      ["baby_seat_orientation",["FRONT_FACING","REAR_FACING"],"Baby-seat orientation."],
+      ["baby",["NO","YES"],"Whether a baby is present."]
+    ]],
+    ["Lighting", [
+      ["light_front",["0.0","0.5"],"Front lighting level."],
+      ["light_back_left",["0.0","0.5"],"Rear-left lighting level."],
+      ["light_back_right",["0.0","0.5"],"Rear-right lighting level."]
+    ]]
+  ];
+  var body = document.getElementById('schema-body');
+  SCHEMA.forEach(function(group){
+    var gr = document.createElement('tr');
+    gr.className = 'group-row';
+    var gtd = document.createElement('td');
+    gtd.colSpan = 3;
+    gtd.textContent = group[0];
+    gr.appendChild(gtd);
+    body.appendChild(gr);
+    group[1].forEach(function(row){
+      var tr = document.createElement('tr');
+      var t1 = document.createElement('td'); t1.className='feat'; t1.innerHTML = '<code>'+row[0]+'</code>';
+      var t2 = document.createElement('td'); t2.className='vals'; t2.textContent = row[1].join(' / ');
+      var t3 = document.createElement('td'); t3.className='desc'; t3.textContent = row[2];
+      tr.appendChild(t1); tr.appendChild(t2); tr.appendChild(t3);
+      body.appendChild(tr);
+    });
+  });
+</script>
+
+</body>
+</html>
