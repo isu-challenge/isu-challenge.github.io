@@ -924,7 +924,7 @@
       <div class="faq-col b">
         <h3><span class="tag">B</span> Track B</h3>
         <details class="faq"><summary>What does the system need to predict?</summary><div class="a-body">The observable features in the label JSON — phone use, occupancy, seat-belt status, suitcase presence/location, beverage objects, baby-seat configuration, and related cabin features — using the schema's feature names and allowed values.</div></details>
-        <details class="faq"><summary>Where do I get real training data?</summary><div class="a-body">50 organizer-collected real cabin images with labels, released under MIT. A recording script and instructions are provided if you want to collect more.</div></details>
+        <details class="faq"><summary>Where do I get real training data?</summary><div class="a-body">50 organizer-collected real cabin images with labels. A recording script and instructions are provided if you want to collect more.</div></details>
         <details class="faq"><summary>What format should predictions use?</summary><div class="a-body">Strict JSON using the prescribed feature names, one value per evaluated feature, chosen from that feature's allowed values.</div></details>
         <details class="faq"><summary>How is accuracy calculated?</summary><div class="a-body">Feature-level comparison against ground truth, plus scene-level exact match when every evaluated feature for a scene is correct. Missing predictions count as incorrect.</div></details>
         <details class="faq"><summary>Which images are used for evaluation?</summary><div class="a-body">Starter-kit synthetic and real images for development; a withheld extended dataset spanning both domains for final evaluation — don't over-fit to one visual domain.</div></details>
