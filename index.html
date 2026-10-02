@@ -14,8 +14,8 @@
     --surface:#ffffff;
     --surface-2:#eef1f6;
     --line:#dbe1ea;
-    --text:#161b22;
-    --muted:#5b6472;
+    --text:#0d1117;
+    --muted:#3a4250;
     --accent:#c97a00;
     --accent-fill:#ffb020;
     --on-accent:#1a1200;
@@ -37,7 +37,7 @@
       --surface-2:#1a212b;
       --line:#262f3d;
       --text:#e8ecf3;
-      --muted:#8e97a8;
+      --muted:#b3bccb;
       --accent:#ffb020;
       --accent-fill:#ffb020;
       --on-accent:#1a1200;
@@ -53,7 +53,7 @@
     --surface-2:#1a212b;
     --line:#262f3d;
     --text:#e8ecf3;
-    --muted:#8e97a8;
+    --muted:#b3bccb;
     --accent:#ffb020;
     --accent-fill:#ffb020;
     --on-accent:#1a1200;
@@ -742,7 +742,7 @@
     <div class="section-head">
       <span class="eyebrow"><svg class="bracket" viewBox="0 0 12 12"><path d="M1 4V1h3M11 4V1H8M1 8v3h3M11 8v3H8"/></svg>Worked example</span>
       <h2>Example scene description.</h2>
-      <p>The Track A sample scene above: a male driver, belted; two rear passengers; a phone, cola bottle, and cola can on the codriver seat.</p>
+      <p>The Track A sample scene above: a male driver, belted; two rear passengers; a phone, cola bottle, and cola can on the codriver seat. See the <a href="feature-schema.html">feature schema</a> for every feature, its values, and which track uses it.</p>
     </div>
     <div class="worked">
       <img data-img="sim" alt="Synthetic scene used in the worked feature-label example">
@@ -792,7 +792,7 @@
           <p>Build ISU systems that answer safety-relevant questions about synthetic and real cabin scenes — occupants, seat belts, objects, driver and passenger behavior — returning predictions in the prescribed JSON schema.</p>
           <ul>
             <li>Reference evaluator model: <code class="mono">Qwen/Qwen2.5-VL-3B-Instruct</code>.</li>
-            <li>Trained and validated on synthetic scenes plus 50 collected real cabin photos.</li>
+            <li>Trained and validated on synthetic scenes plus 60 collected real cabin photos.</li>
             <li>Final ranking is done on a private test set spanning both synthetic and real domains.</li>
           </ul>
           <div class="io-row">
@@ -853,8 +853,8 @@
     <p style="margin-top:18px;color:var(--muted);font-size:13.4px;max-width:70ch;">Track A results are ranked by Pareto non-dominance sorting across all four objectives; ties fall back to a weighted linear combination.</p>
     <div class="data-strip">
       <div class="data-stat"><div class="big">5,000</div><div class="lbl">synthetic in-car scenes</div></div>
-      <div class="data-stat"><div class="big">50</div><div class="lbl">real cabin photos</div></div>
-      <div class="data-stat"><div class="big">38</div><div class="lbl">scene features</div></div>
+      <div class="data-stat"><div class="big">60</div><div class="lbl">real cabin photos</div></div>
+      <div class="data-stat"><div class="big">42</div><div class="lbl">scene features</div></div>
       <div class="data-stat"><div class="big">MIT</div><div class="lbl">license on non-external data</div></div>
     </div>
   </div>

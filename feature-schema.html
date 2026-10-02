@@ -14,8 +14,8 @@
     --surface:#ffffff;
     --surface-2:#eef1f6;
     --line:#dbe1ea;
-    --text:#161b22;
-    --muted:#5b6472;
+    --text:#0d1117;
+    --muted:#3a4250;
     --accent:#c97a00;
     --accent-fill:#ffb020;
     --on-accent:#1a1200;
@@ -37,7 +37,7 @@
       --surface-2:#1a212b;
       --line:#262f3d;
       --text:#e8ecf3;
-      --muted:#8e97a8;
+      --muted:#b3bccb;
       --accent:#ffb020;
       --accent-fill:#ffb020;
       --on-accent:#1a1200;
@@ -53,7 +53,7 @@
     --surface-2:#1a212b;
     --line:#262f3d;
     --text:#e8ecf3;
-    --muted:#8e97a8;
+    --muted:#b3bccb;
     --accent:#ffb020;
     --accent-fill:#ffb020;
     --on-accent:#1a1200;
@@ -171,6 +171,10 @@
   table.schema td.feat code{font-weight:600;}
   table.schema td.vals{font-family:var(--font-mono);font-size:12px;color:var(--muted);}
   table.schema td.desc{color:var(--muted);}
+  table.schema th.track{text-align:center;white-space:nowrap;}
+  table.schema td.track{text-align:center;font-weight:700;font-size:20px;line-height:1;vertical-align:middle;}
+  table.schema td.track-a{color:var(--track-a);}
+  table.schema td.track-b{color:var(--accent);}
 
   footer{
     border-top:1px solid var(--line);
@@ -219,13 +223,13 @@
   <div class="container">
     <div class="section-head">
       <span class="eyebrow"><svg class="bracket" viewBox="0 0 12 12"><path d="M1 4V1h3M11 4V1H8M1 8v3h3M11 8v3H8"/></svg>Feature schema</span>
-      <h2>One schema, four seats, thirty-eight signals.</h2>
+      <h2>One schema, four seats, forty-two signals.</h2>
       <p>Every scene is described by this feature set — the questions Track B must answer, and the ground truth Track A must preserve. Values are <code class="mono">null</code> when the corresponding seat, passenger, or object isn't present. Track A and B notebooks each evaluate only the subset relevant to that track.</p>
     </div>
     <div class="schema-scroll">
       <table class="schema" id="schema-table">
-        <caption>Values are <code>null</code> when the seat, passenger, or object is absent.</caption>
-        <thead><tr><th>Feature</th><th>Values</th><th>Description</th></tr></thead>
+        <caption>Values are <code>null</code> when the seat, passenger, or object is absent. &times; in Track A = must be preserved during translation; &times; in Track B = must be predicted.</caption>
+        <thead><tr><th>Feature</th><th>Values</th><th>Description</th><th class="track">Track A</th><th class="track">Track B</th></tr></thead>
         <tbody id="schema-body"></tbody>
       </table>
     </div>
@@ -238,7 +242,7 @@
     <div class="footer-links">
       <a href="https://huggingface.co/datasets/ISU-Test/isu-challenge-dataset" target="_blank" rel="noopener">Dataset ↗</a>
       <a href="https://github.com/isu-challenge/Starterkit-ICSE-2027" target="_blank" rel="noopener">Starter Kit ↗</a>
-      <a href="https://www.kaggle.com/competitions/isu-challenge-2027" target="_blank" rel="noopener">Kaggle ↗</a>
+      <a href="https://www.kaggle.com/competitions/isu-challenge" target="_blank" rel="noopener">Kaggle ↗</a>
     </div>
   </div>
 </footer>
@@ -246,7 +250,7 @@
 <script>
 var SCHEMA = [
     ["Environment", [
-      ["env",["URBAN","HIGHWAY","NATURE","COUNTRYSIDE"],"Scene environment."],
+      ["env",["URBAN","HIGHWAY","NATURE","COUNTRYSIDE","GARAGE"],"Scene environment."],
       ["env_strength",["0.5","1.0"],"Environment intensity."],
       ["exposure_compensation",["0.0","2.0"],"Camera exposure compensation."]
     ]],
@@ -261,20 +265,23 @@ var SCHEMA = [
     ]],
     ["Codriver (front-right)", [
       ["passenger_codriver",["NO","YES"],"Whether the front-right passenger seat is occupied."],
+      ["passenger_codriver_gender",["MALE","FEMALE"],"Codriver gender."],
       ["passenger_codriver_tshirt_color",["BLACK","WHITE"],"Codriver shirt color."],
       ["passenger_codriver_emotion",["HAPPY","SERIOUS"],"Codriver facial expression."],
       ["passenger_codriver_head_angle",["-45","...","45"],"Codriver head angle in degrees (7 steps)."],
       ["codriver_safety_belt",["NO","YES"],"Codriver safety-belt status."]
     ]],
     ["Rear-left passenger", [
-      ["passenger_back_seat_left",["NO","YES"],"Whether the rear-left seat is occupied."],
+      ["passenger_rear_seat_left",["NO","YES"],"Whether the rear-left seat is occupied."],
+      ["passenger_rear_left_gender",["MALE","FEMALE"],"Rear-left passenger gender."],
       ["passenger_rear_left_tshirt_color",["BLACK","WHITE"],"Rear-left passenger shirt color."],
       ["passenger_rear_left_emotion",["HAPPY","SERIOUS"],"Rear-left passenger facial expression."],
       ["passenger_rear_left_head_angle",["-45","...","45"],"Rear-left head angle in degrees (7 steps)."],
       ["passenger_rear_left_safety_belt",["NO","YES"],"Rear-left safety-belt status."]
     ]],
     ["Rear-right passenger", [
-      ["passenger_back_seat_right",["NO","YES"],"Whether the rear-right seat is occupied."],
+      ["passenger_rear_seat_right",["NO","YES"],"Whether the rear-right seat is occupied."],
+      ["passenger_rear_right_gender",["MALE","FEMALE"],"Rear-right passenger gender."],
       ["passenger_rear_right_tshirt_color",["BLACK","WHITE"],"Rear-right passenger shirt color."],
       ["passenger_rear_right_emotion",["HAPPY","SERIOUS"],"Rear-right passenger facial expression."],
       ["passenger_rear_right_head_angle",["-45","...","45"],"Rear-right head angle in degrees (7 steps)."],
@@ -301,12 +308,40 @@ var SCHEMA = [
       ["light_back_right",["0.0","0.5"],"Rear-right lighting level."]
     ]]
   ];
+  var TRACK_A = [
+    "driver_phone","driver_safety_belt",
+    "passenger_codriver","passenger_codriver_head_angle","codriver_safety_belt",
+    "passenger_rear_seat_left","passenger_rear_left_head_angle","passenger_rear_left_safety_belt",
+    "passenger_rear_seat_right","passenger_rear_right_head_angle","passenger_rear_right_safety_belt",
+    "phone_codriver_seat","colabottle_codriver_seat","colacan_codriver_seat",
+    "suitcase","suitcase_location","suitcase_pose",
+    "baby_seat","baby_seat_orientation","baby"
+  ];
+  var TRACK_B = [
+    "driver_gender","driver_tshirt_color","driver_emotion","driver_phone","driver_safety_belt",
+    "passenger_codriver","passenger_codriver_gender","passenger_codriver_tshirt_color","passenger_codriver_emotion","codriver_safety_belt",
+    "passenger_rear_seat_left","passenger_rear_left_gender","passenger_rear_left_tshirt_color","passenger_rear_left_emotion","passenger_rear_left_safety_belt",
+    "passenger_rear_seat_right","passenger_rear_right_gender","passenger_rear_right_tshirt_color","passenger_rear_right_emotion","passenger_rear_right_safety_belt",
+    "phone_codriver_seat","phone_codriver_seat_color","colabottle_codriver_seat","colacan_codriver_seat",
+    "suitcase","suitcase_color","suitcase_location","suitcase_pose",
+    "baby_seat","baby_seat_orientation","baby"
+  ];
+  function trackCell(cls, used, label){
+    var td = document.createElement('td');
+    td.className = 'track ' + cls;
+    if (used) {
+      td.textContent = '×';
+      td.setAttribute('aria-label', label);
+      td.title = label;
+    }
+    return td;
+  }
   var body = document.getElementById('schema-body');
   SCHEMA.forEach(function(group){
     var gr = document.createElement('tr');
     gr.className = 'group-row';
     var gtd = document.createElement('td');
-    gtd.colSpan = 3;
+    gtd.colSpan = 5;
     gtd.textContent = group[0];
     gr.appendChild(gtd);
     body.appendChild(gr);
@@ -315,7 +350,9 @@ var SCHEMA = [
       var t1 = document.createElement('td'); t1.className='feat'; t1.innerHTML = '<code>'+row[0]+'</code>';
       var t2 = document.createElement('td'); t2.className='vals'; t2.textContent = row[1].join(' / ');
       var t3 = document.createElement('td'); t3.className='desc'; t3.textContent = row[2];
-      tr.appendChild(t1); tr.appendChild(t2); tr.appendChild(t3);
+      var t4 = trackCell('track-a', TRACK_A.indexOf(row[0]) !== -1, 'Preserved in Track A');
+      var t5 = trackCell('track-b', TRACK_B.indexOf(row[0]) !== -1, 'Predicted in Track B');
+      tr.appendChild(t1); tr.appendChild(t2); tr.appendChild(t3); tr.appendChild(t4); tr.appendChild(t5);
       body.appendChild(tr);
     });
   });
