@@ -242,11 +242,12 @@
   .btn-ghost:hover{border-color:var(--accent);}
   .hero-links{display:flex;flex-wrap:wrap;gap:8px;}
   .hero-links a{
-    font-size:11.5px;color:var(--text);font-weight:600;text-decoration:none;
-    display:inline-flex;align-items:center;gap:6px;white-space:nowrap;
-    border:1px solid var(--line);border-radius:20px;background:var(--surface-2);
-    padding:5px 10px;
+    font-size:12.5px;color:var(--text);font-weight:600;text-decoration:none;
+    display:inline-flex;align-items:center;gap:8px;white-space:nowrap;
+    border:1.25px solid var(--muted);border-radius:20px;background:var(--surface);
+    padding:5px 12px;box-shadow:0 1px 2px rgba(20,25,35,.08);
   }
+  .hero-links a svg{width:14px;height:14px;flex:none;}
   .hero-links a:hover{color:var(--accent);border-color:var(--accent);background:var(--surface);}
 
   /* viewfinder strip + detection preview share the corner-bracket framing */
@@ -616,9 +617,9 @@
         <a class="btn btn-ghost" href="https://github.com/isu-challenge/Starterkit-ICSE-2027" target="_blank" rel="noopener">Get the starter kit ↗</a>
       </div>
       <div class="hero-links">
-        <a href="https://arxiv.org/abs/2607.02300" target="_blank" rel="noopener">ISU-Test ·  Paper</a>
-        <a href="https://huggingface.co/datasets/ISU-Test/isu-challenge-dataset" target="_blank" rel="noopener">Dataset · Hugging Face</a>
-        <a href="https://github.com/ast-fortiss-tum/ISU-Test" target="_blank" rel="noopener">ISU-Test · GitHub</a>
+        <a href="https://arxiv.org/abs/2607.02300" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h5"/></svg>ISU-Test · Paper</a>
+        <a href="https://huggingface.co/datasets/ISU-Test/isu-challenge-dataset" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg>Dataset · Hugging Face</a>
+        <a href="https://github.com/ast-fortiss-tum/ISU-Test" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2.2c-3.3.7-4-1.4-4-1.4-.6-1.4-1.4-1.8-1.4-1.8-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.3 4.6 18.3 5 18.3 5c.7 1.7.3 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .5z"/></svg>ISU-Test · GitHub</a>
       </div>
     </div>
     <div class="detect-frame">
