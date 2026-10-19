@@ -59,7 +59,37 @@
         "clip_visual_diversity": 0.0,
         "generation_seconds_per_scene": 0.0
       }
+    },
+    {
+      "team_id": "organizers",
+      "display_name": "Organizers (dry run)",
+      "track": "track_b",
+      "pull_request": 2,
+      "commit": "846c5f1f3ea8f122a11c7f71ee63b0cc8dca40a6",
+      "evaluated_at": "2026-10-19T21:04:06+00:00",
+      "hardware": "NVIDIA L4",
+      "evaluator_ref": "2ea8759e82e623e998d00871e0382c9b3f25c4e6",
+      "efficiency_self_reported": false,
+      "metrics": {
+        "accuracy": 0.6594800253646164,
+        "scene_exact_match": 0.02,
+        "correct_features": 1040,
+        "evaluated_features": 1577,
+        "latency_seconds_mean": 8.786123029879672,
+        "latency_seconds_total": 878.6123029879673,
+        "wall_seconds_total": 885.8579676549998,
+        "scenes": 100,
+        "missing_predictions": 0,
+        "prediction_errors": 0,
+        "accuracy_real": null,
+        "scene_exact_match_real": null,
+        "scenes_real": null,
+        "accuracy_synthetic": 0.6594800253646164,
+        "scene_exact_match_synthetic": 0.02,
+        "scenes_synthetic": 100,
+        "runner_predict_seconds": 887.2
+      }
     }
   ],
-  "updated_at": "2026-10-19T20:09:07+00:00"
+  "updated_at": "2026-10-19T21:04:24+00:00"
 }
