@@ -1,4 +1,35 @@
 {
   "schema": 1,
-  "entries": []
+  "entries": [
+    {
+      "team_id": "organizers",
+      "display_name": "Organizers (dry run)",
+      "track": "track_b",
+      "pull_request": 2,
+      "commit": "e7ad9734c67f7afdb7c3dda4447b0fb14de59e86",
+      "evaluated_at": "2026-10-19T19:47:00+00:00",
+      "hardware": "NVIDIA L4",
+      "evaluator_ref": "2ea8759e82e623e998d00871e0382c9b3f25c4e6",
+      "efficiency_self_reported": false,
+      "metrics": {
+        "accuracy": 0.6594800253646164,
+        "scene_exact_match": 0.02,
+        "correct_features": 1040,
+        "evaluated_features": 1577,
+        "latency_seconds_mean": 8.879949989171001,
+        "latency_seconds_total": 887.9949989171,
+        "wall_seconds_total": 911.0402238729876,
+        "scenes": 100,
+        "missing_predictions": 0,
+        "prediction_errors": 0,
+        "accuracy_real": null,
+        "scene_exact_match_real": null,
+        "scenes_real": null,
+        "accuracy_synthetic": 0.6594800253646164,
+        "scene_exact_match_synthetic": 0.02,
+        "scenes_synthetic": 100
+      }
+    }
+  ],
+  "updated_at": "2026-10-19T19:56:04+00:00"
 }
