@@ -89,7 +89,37 @@
         "scenes_synthetic": 100,
         "runner_predict_seconds": 887.2
       }
+    },
+    {
+      "team_id": "organizers",
+      "display_name": "Organizers (dry run)",
+      "track": "track_a",
+      "pull_request": 3,
+      "commit": "849770002ebf732ecdabaf99196f32641791e76b",
+      "evaluated_at": "2026-10-19T21:13:39+00:00",
+      "hardware": "NVIDIA L4",
+      "evaluator_ref": "2ea8759e82e623e998d00871e0382c9b3f25c4e6",
+      "efficiency_self_reported": true,
+      "metrics": {
+        "failure_rate": 0.0,
+        "failures": 0,
+        "executed_scenes": 50,
+        "ssim": 1.0,
+        "psnr": null,
+        "vgg_perceptual_distance": 0.0,
+        "kl_divergence": 0.0,
+        "wasserstein_distance": 0.0,
+        "fid": -8.211301610572264e-05,
+        "kid_mean": -0.006410157773643732,
+        "inception_score_mean": 1.3294196128845215,
+        "sam_matched_iou": 1.0,
+        "sam_boundary_f1": 1.0,
+        "semantic_segmentation_score": 0.0,
+        "feature_diversity": 0.0,
+        "clip_visual_diversity": 0.0,
+        "generation_seconds_per_scene": 0.0
+      }
     }
   ],
-  "updated_at": "2026-10-19T21:04:24+00:00"
+  "updated_at": "2026-10-19T21:13:55+00:00"
 }
