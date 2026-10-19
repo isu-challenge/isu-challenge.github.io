@@ -911,7 +911,8 @@
   }
   function format(value, digits) {
     if (typeof value !== 'number' || !isFinite(value)) return '\u2013';
-    return digits === 'pct' ? (value * 100).toFixed(1) + '%' : value.toFixed(digits);
+    var text = digits === 'pct' ? (value * 100).toFixed(1) + '%' : value.toFixed(digits);
+    return text.replace(/^-(?=0(\.0*)?%?$)/, '');
   }
   function metric(entry, key) {
     var value = entry.metrics && entry.metrics[key];
