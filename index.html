@@ -417,6 +417,17 @@
     color:var(--accent);border:1px dashed var(--accent);border-radius:99px;padding:6px 16px;margin-bottom:14px;
   }
   .leaderboard-placeholder p{color:var(--muted);font-size:13.6px;line-height:1.6;}
+  .lb-track{margin-bottom:22px;}
+  .lb-track:last-child{margin-bottom:0;}
+  .lb-note{color:var(--muted);font-size:12.5px;margin:-6px 0 12px;}
+  .lb-scroll{overflow-x:auto;}
+  .lb-table{width:100%;border-collapse:collapse;font-size:13.4px;}
+  .lb-table th,.lb-table td{padding:9px 12px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap;}
+  .lb-table th{font-family:var(--font-mono);font-size:11.5px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;}
+  .lb-table th:nth-child(2),.lb-table td:nth-child(2){text-align:left;}
+  .lb-table td.num{font-family:var(--font-mono);}
+  .lb-table tbody tr:first-child td{color:var(--accent);font-weight:600;}
+  .lb-empty-track{color:var(--muted);font-size:13.4px;}
   .starterkit-panel{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;}
   .starterkit-panel .file-chips{flex:1 1 420px;}
   .starterkit-panel .btn{flex:0 0 auto;white-space:nowrap;}
@@ -868,7 +879,8 @@
       <h2>Live rankings, once scoring opens.</h2>
       <p>Track A and Track B standings will populate here as submissions are scored against the reference pipelines.</p>
     </div>
-    <div class="panel leaderboard-empty">
+    <div class="panel" id="leaderboard-tables" style="display:none"></div>
+    <div class="panel leaderboard-empty" id="leaderboard-empty">
       <div class="leaderboard-placeholder">
         <div class="ph-badge">To be announced</div>
         <p>No submissions have been scored yet — the leaderboard opens alongside the competition launch and starter-kit release.</p>
@@ -876,6 +888,95 @@
     </div>
   </div>
 </section>
+<script>
+// Renders data/leaderboard.json, written by the Starterkit evaluation workflow.
+// Shows each team's best entry per track. Values are inserted with textContent only.
+(function(){
+  var TRACKS = [
+    {id: 'track_a', title: 'Track A \u2014 Test Generation', sort: 'failure_rate',
+     note: 'Ordered by failure rate. The final ranking uses Pareto sorting across all Track A objectives.',
+     columns: [['failure_rate', 'Failure rate', 'pct'], ['fid', 'FID', 1], ['sam_matched_iou', 'SAM IoU', 3],
+               ['feature_diversity', 'Diversity', 3], ['generation_seconds_per_scene', 's / scene', 2]]},
+    {id: 'track_b', title: 'Track B \u2014 System Development', sort: 'accuracy',
+     note: 'Ordered by feature accuracy.',
+     columns: [['accuracy', 'Feature acc.', 'pct'], ['scene_exact_match', 'Scene exact', 'pct'],
+               ['latency_seconds_mean', 's / scene', 2]]}
+  ];
+
+  function el(tag, text, className) {
+    var node = document.createElement(tag);
+    if (text !== undefined && text !== null) node.textContent = text;
+    if (className) node.className = className;
+    return node;
+  }
+  function format(value, digits) {
+    if (typeof value !== 'number' || !isFinite(value)) return '\u2013';
+    return digits === 'pct' ? (value * 100).toFixed(1) + '%' : value.toFixed(digits);
+  }
+  function metric(entry, key) {
+    var value = entry.metrics && entry.metrics[key];
+    return typeof value === 'number' && isFinite(value) ? value : -Infinity;
+  }
+  function bestPerTeam(entries, track) {
+    var best = {};
+    entries.forEach(function(entry) {
+      if (entry.track !== track.id) return;
+      var current = best[entry.team_id];
+      if (!current || metric(entry, track.sort) > metric(current, track.sort) ||
+          (metric(entry, track.sort) === metric(current, track.sort) &&
+           String(entry.evaluated_at) > String(current.evaluated_at))) {
+        best[entry.team_id] = entry;
+      }
+    });
+    return Object.keys(best).map(function(key) { return best[key]; })
+      .sort(function(a, b) { return metric(b, track.sort) - metric(a, track.sort); });
+  }
+  function renderTrack(container, track, rows) {
+    var section = el('div', null, 'lb-track');
+    section.appendChild(el('h3', track.title));
+    section.appendChild(el('p', track.note, 'lb-note'));
+    if (!rows.length) {
+      section.appendChild(el('p', 'No scored submissions yet.', 'lb-empty-track'));
+      container.appendChild(section);
+      return;
+    }
+    var table = el('table', null, 'lb-table');
+    var headRow = el('tr');
+    ['#', 'Team'].concat(track.columns.map(function(c) { return c[1]; }), ['Evaluated', 'Hardware'])
+      .forEach(function(label) { headRow.appendChild(el('th', label)); });
+    table.appendChild(el('thead')).appendChild(headRow);
+    var body = el('tbody');
+    rows.forEach(function(entry, index) {
+      var row = el('tr');
+      row.appendChild(el('td', String(index + 1), 'num'));
+      row.appendChild(el('td', entry.display_name || entry.team_id));
+      track.columns.forEach(function(column) {
+        row.appendChild(el('td', format(entry.metrics && entry.metrics[column[0]], column[2]), 'num'));
+      });
+      row.appendChild(el('td', String(entry.evaluated_at || '').slice(0, 10), 'num'));
+      row.appendChild(el('td', entry.hardware || ''));
+      body.appendChild(row);
+    });
+    table.appendChild(body);
+    var scroll = el('div', null, 'lb-scroll');
+    scroll.appendChild(table);
+    section.appendChild(scroll);
+    container.appendChild(section);
+  }
+
+  fetch('data/leaderboard.json', {cache: 'no-store'})
+    .then(function(response) { return response.ok ? response.json() : null; })
+    .then(function(data) {
+      var entries = data && Array.isArray(data.entries) ? data.entries : [];
+      if (!entries.length) return;
+      var container = document.getElementById('leaderboard-tables');
+      TRACKS.forEach(function(track) { renderTrack(container, track, bestPerTeam(entries, track)); });
+      container.style.display = '';
+      document.getElementById('leaderboard-empty').style.display = 'none';
+    })
+    .catch(function() {});
+})();
+</script>
 
 <section id="timeline">
   <div class="container">
@@ -1114,6 +1215,11 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="form-group">
           <label for="teamName">Team Name <span style="color:var(--accent);">*</span></label>
           <input type="text" id="teamName" name="Team Name" required placeholder="Your Team Name">
+        </div>
+
+        <div class="form-group">
+          <label for="githubUsers">GitHub Usernames <span style="color:var(--accent);">*</span></label>
+          <input type="text" id="githubUsers" name="GitHub Usernames" required placeholder="alice, bob — every member who will open submission pull requests">
         </div>
 
         <div class="form-group">
