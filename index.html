@@ -890,13 +890,21 @@
 </section>
 <script>
 // Renders data/leaderboard.json, written by the Starterkit evaluation workflow.
-// Shows each team's best entry per track. Values are inserted with textContent only.
+// Track A: Pareto fronts with a weighted tie-break, as in track_a/track_a_metrics.py of the
+// starter kit; Track B: feature accuracy. Values are inserted with textContent only.
 (function(){
   var TRACKS = [
-    {id: 'track_a', title: 'Track A \u2014 Test Generation', sort: 'failure_rate',
-     note: 'Ordered by failure rate. The final ranking uses Pareto sorting across all Track A objectives.',
-     columns: [['failure_rate', 'Failure rate', 'pct'], ['fid', 'FID', 1], ['sam_matched_iou', 'SAM IoU', 3],
-               ['feature_diversity', 'Diversity', 3], ['generation_seconds_per_scene', 's / scene', 2]]},
+    {id: 'track_a', title: 'Track A \u2014 Test Generation',
+     note: 'Ranked by Pareto front over scene and feature failure rate, realism score, feature diversity, ' +
+           'and generation time; ties within a front are broken by a weighted score ' +
+           '(failure 0.3, realism 0.4, diversity 0.3).',
+     pareto: {objectives: [['scene_failure_rate', 'max'], ['feature_failure_rate', 'max'], ['realism_score', 'max'],
+                           ['feature_diversity', 'max'], ['generation_seconds_per_scene', 'min']],
+              weights: {scene_failure_rate: 0.15, feature_failure_rate: 0.15, realism_score: 0.4,
+                        feature_diversity: 0.3}},
+     columns: [['scene_failure_rate', 'Scene failure', 'pct'], ['feature_failure_rate', 'Feature failure', 'pct'],
+               ['realism_score', 'Realism', 3], ['feature_diversity', 'Diversity', 3],
+               ['generation_seconds_per_scene', 's / scene', 2]]},
     {id: 'track_b', title: 'Track B \u2014 System Development', sort: 'accuracy',
      note: 'Ordered by feature accuracy.',
      columns: [['accuracy', 'Feature acc.', 'pct'], ['scene_exact_match', 'Scene exact', 'pct'],
@@ -914,23 +922,62 @@
     var text = digits === 'pct' ? (value * 100).toFixed(1) + '%' : value.toFixed(digits);
     return text.replace(/^-(?=0(\.0*)?%?$)/, '');
   }
-  function metric(entry, key) {
+  // Missing values count as the worst possible value.
+  function metric(entry, key, direction) {
     var value = entry.metrics && entry.metrics[key];
-    return typeof value === 'number' && isFinite(value) ? value : -Infinity;
+    if (typeof value === 'number' && isFinite(value)) return value;
+    return direction === 'min' ? Infinity : -Infinity;
   }
-  function bestPerTeam(entries, track) {
-    var best = {};
-    entries.forEach(function(entry) {
-      if (entry.track !== track.id) return;
-      var current = best[entry.team_id];
-      if (!current || metric(entry, track.sort) > metric(current, track.sort) ||
-          (metric(entry, track.sort) === metric(current, track.sort) &&
-           String(entry.evaluated_at) > String(current.evaluated_at))) {
-        best[entry.team_id] = entry;
-      }
+  function dominates(first, second, objectives) {
+    var better = false;
+    for (var i = 0; i < objectives.length; i++) {
+      var key = objectives[i][0], max = objectives[i][1] === 'max';
+      var a = metric(first, key, objectives[i][1]), b = metric(second, key, objectives[i][1]);
+      if (max ? a < b : a > b) return false;
+      if (max ? a > b : a < b) better = true;
+    }
+    return better;
+  }
+  // Sets _front (1 = not dominated) and _score (weighted sum of min-max normalized metrics).
+  function paretoRank(entries, pareto) {
+    var remaining = entries.slice(), front = 1;
+    while (remaining.length) {
+      var current = remaining.filter(function(entry) {
+        return !remaining.some(function(other) { return dominates(other, entry, pareto.objectives); });
+      });
+      current.forEach(function(entry) { entry._front = front; });
+      remaining = remaining.filter(function(entry) { return current.indexOf(entry) < 0; });
+      front++;
+    }
+    var keys = Object.keys(pareto.weights), ranges = {};
+    keys.forEach(function(key) {
+      var values = entries.map(function(entry) { return metric(entry, key, 'max'); }).filter(isFinite);
+      ranges[key] = values.length ? [Math.min.apply(null, values), Math.max.apply(null, values)] : [0, 0];
     });
-    return Object.keys(best).map(function(key) { return best[key]; })
-      .sort(function(a, b) { return metric(b, track.sort) - metric(a, track.sort); });
+    entries.forEach(function(entry) {
+      entry._score = keys.reduce(function(sum, key) {
+        var value = metric(entry, key, 'max'), low = ranges[key][0], high = ranges[key][1];
+        var normalized = !isFinite(value) ? 0 : (high > low ? (value - low) / (high - low) : 1);
+        return sum + pareto.weights[key] * normalized;
+      }, 0);
+    });
+  }
+  // Each team's best submission, ranked against the other teams' best submissions.
+  function rank(entries, track) {
+    var own = entries.filter(function(entry) { return entry.track === track.id; });
+    var compare = track.pareto
+      ? function(a, b) { return (a._front - b._front) || (b._score - a._score) ||
+                                String(b.evaluated_at).localeCompare(String(a.evaluated_at)); }
+      : function(a, b) { return (metric(b, track.sort, 'max') - metric(a, track.sort, 'max')) ||
+                                String(b.evaluated_at).localeCompare(String(a.evaluated_at)); };
+    if (track.pareto) paretoRank(own, track.pareto);
+    var best = {};
+    own.slice().sort(compare).forEach(function(entry) {
+      if (!best[entry.team_id]) best[entry.team_id] = entry;
+    });
+    var rows = Object.keys(best).map(function(key) { return best[key]; });
+    if (track.pareto) paretoRank(rows, track.pareto);
+    return rows.sort(compare);
   }
   function renderTrack(container, track, rows) {
     var section = el('div', null, 'lb-track');
@@ -943,7 +990,8 @@
     }
     var table = el('table', null, 'lb-table');
     var headRow = el('tr');
-    ['#', 'Team'].concat(track.columns.map(function(c) { return c[1]; }), ['Evaluated', 'Hardware'])
+    ['#', 'Team'].concat(track.pareto ? ['Front'] : [], track.columns.map(function(c) { return c[1]; }),
+                         ['Evaluated', 'Hardware'])
       .forEach(function(label) { headRow.appendChild(el('th', label)); });
     table.appendChild(el('thead')).appendChild(headRow);
     var body = el('tbody');
@@ -951,6 +999,7 @@
       var row = el('tr');
       row.appendChild(el('td', String(index + 1), 'num'));
       row.appendChild(el('td', entry.display_name || entry.team_id));
+      if (track.pareto) row.appendChild(el('td', String(entry._front), 'num'));
       track.columns.forEach(function(column) {
         row.appendChild(el('td', format(entry.metrics && entry.metrics[column[0]], column[2]), 'num'));
       });
@@ -971,7 +1020,7 @@
       var entries = data && Array.isArray(data.entries) ? data.entries : [];
       if (!entries.length) return;
       var container = document.getElementById('leaderboard-tables');
-      TRACKS.forEach(function(track) { renderTrack(container, track, bestPerTeam(entries, track)); });
+      TRACKS.forEach(function(track) { renderTrack(container, track, rank(entries, track)); });
       container.style.display = '';
       document.getElementById('leaderboard-empty').style.display = 'none';
     })
@@ -1013,7 +1062,7 @@
         <div class="steps">
           <div class="step"><span class="idx">01</span><p>Email <code>lev.sorokin@tum.de</code> with subject <code>ISU-Challenge Registration Track A/B</code>, stating team or participant name, affiliation, and address — a team name is encouraged if you're entering as a group.</p></div>
           <div class="step"><span class="idx">02</span><p>Build against the starter kit for one or both tracks. Registration deadlines and platform details are announced at competition launch. Ongoing communication with organizers and other teams happens over Discord; an invite is sent after registration.</p></div>
-          <div class="step"><span class="idx">03</span><p><b>Track A submission:</b> generated image archive plus reproducible generation code, preserving the required semantic and spatial ground truth.</p></div>
+          <div class="step"><span class="idx">03</span><p><b>Track A submission:</b> generation code that the organizers run on withheld scenes, preserving the required semantic and spatial ground truth.</p></div>
           <div class="step"><span class="idx">04</span><p><b>Track B submission:</b> model files, parameters, inference or training code, and predictions in the required JSON format.</p></div>
           <div class="step"><span class="idx">05</span><p>Submissions pass automated integrity and reproducibility checks, and all submissions are additionally reviewed manually.</p></div>
         </div>
