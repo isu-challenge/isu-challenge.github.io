@@ -179,7 +179,39 @@
         "scenes_synthetic": 100,
         "runner_predict_seconds": 936.2
       }
+    },
+    {
+      "team_id": "organizers",
+      "display_name": "Organizers (dry run)",
+      "track": "track_a",
+      "pull_request": 8,
+      "commit": "ea5c7c08e16e27711554df1ce007492a8f30322c",
+      "evaluated_at": "2026-10-21T18:02:23+00:00",
+      "hardware": "NVIDIA L4",
+      "evaluator_ref": "8252da4cacc2613b8db2628e085d2d17354949c0",
+      "efficiency_self_reported": false,
+      "metrics": {
+        "scene_failure_rate": 1.0,
+        "feature_failure_rate": 0.35208711433756806,
+        "failures": 40,
+        "executed_scenes": 40,
+        "realism_score": -0.00033803215380033916,
+        "ssim": 0.4574313941342279,
+        "psnr": 12.992153348616494,
+        "vgg_perceptual_distance": 0.7908041079839071,
+        "kl_divergence": 0.5304459878928596,
+        "wasserstein_distance": 15.345998510373807,
+        "fid": 133.18362426757812,
+        "kid_mean": 0.13737435638904572,
+        "inception_score_mean": 1.2616350650787354,
+        "sam_matched_iou": 1.0,
+        "sam_boundary_f1": 1.0,
+        "semantic_segmentation_score": 0.0,
+        "feature_diversity": 0.4475936029782183,
+        "clip_visual_diversity": 0.10183072835206985,
+        "generation_seconds_per_scene": 0.2675699076795718
+      }
     }
   ],
-  "updated_at": "2026-10-21T17:49:27+00:00"
+  "updated_at": "2026-10-21T18:02:38+00:00"
 }
