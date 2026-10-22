@@ -723,7 +723,7 @@
       <div class="lede-card">
         <div class="num">03</div>
         <h3>Executable evaluation</h3>
-        <p>Both tracks are scored by automated pipelines against reference VLMs — <code class="mono">Qwen/Qwen2.5-VL-3B-Instruct</code> during development, an industrial system and withheld real+synthetic data at final evaluation.</p>
+        <p>Both tracks are scored by automated pipelines against reference VLMs — <code class="mono">Qwen/Qwen2.5-VL-3B-Instruct</code> during development, an industrial system at final evaluation.</p>
       </div>
     </div>
   </div>
@@ -804,7 +804,7 @@
           <p>Build ISU systems that answer safety-relevant questions about synthetic and real cabin scenes — occupants, seat belts, objects, driver and passenger behavior — returning predictions in the prescribed JSON schema.</p>
           <ul>
             <li>Reference evaluator model: <code class="mono">Qwen/Qwen2.5-VL-3B-Instruct</code>.</li>
-            <li>Trained and validated on synthetic scenes plus 60 collected real cabin photos.</li>
+            <li>Trained and validated on synthetic scenes plus 30 public real cabin photos.</li>
             <li>Final ranking is done on a private test set spanning both synthetic and real domains.</li>
           </ul>
           <div class="io-row">
@@ -847,8 +847,8 @@
       <div class="metric-panel a">
         <div class="mp-head"><div class="tag">A</div><h3>Track A metrics</h3></div>
         <div class="metric-list">
-          <div class="metric-row"><div class="m-name">Failure rate</div><div class="m-desc">Scenes exposing a failure ÷ scenes executed, via feature matching against <code>Qwen/Qwen2.5-VL-3B-Instruct</code>. A separate industrial system is added for final evaluation.</div></div>
-          <div class="metric-row"><div class="m-name">Realism</div><div class="m-desc">Measured with published image-realism metrics [2].</div></div>
+          <div class="metric-row"><div class="m-name">Failure rate</div><div class="m-desc">Scenes (and features) where the answers of <code>Qwen/Qwen2.5-VL-3B-Instruct</code> for the generated image differ from its answers for the real photo of the same scene, on the 30 withheld scenes with a real photo. A separate industrial system is added for final evaluation.</div></div>
+          <div class="metric-row"><div class="m-name">Realism</div><div class="m-desc">Published image-realism metrics [2] of the generated images against the real photos; each metric is min-max normalized across the teams and averaged into an overall realism.</div></div>
           <div class="metric-row"><div class="m-name">Diversity</div><div class="m-desc">Feature diversity of failing scenes, following ISU-Test [1]; visual diversity measured with CLIP (clothing colour, style, and similar appearance shifts).</div></div>
           <div class="metric-row"><div class="m-name">Efficiency</div><div class="m-desc">Generation time, measured on a standardized <code>g6e.2xlarge</code> EC2 instance at final evaluation.</div></div>
         </div>
@@ -858,14 +858,14 @@
         <div class="metric-list">
           <div class="metric-row"><div class="m-name">Accuracy</div><div class="m-desc">Feature-level and scene-level exact-match performance on visual-question-answering predictions.</div></div>
           <div class="metric-row"><div class="m-name">Latency</div><div class="m-desc">Time to process a scene and return a prediction, measured on <code>g6e.2xlarge</code> with an NVIDIA L40S GPU.</div></div>
-          <div class="metric-row"><div class="m-name">Extended evaluation</div><div class="m-desc">Submitted systems are re-scored on an extended real + synthetic dataset withheld until final evaluation.</div></div>
+          <div class="metric-row"><div class="m-name">Withheld data</div><div class="m-desc">Systems are scored on 30 withheld real photos and 500 withheld synthetic scenes.</div></div>
         </div>
       </div>
     </div>
-    <p style="margin-top:18px;color:var(--muted);font-size:13.4px;max-width:70ch;">Track A results are ranked by Pareto non-dominance sorting across all four objectives; ties fall back to a weighted linear combination.</p>
+    <p style="margin-top:18px;color:var(--muted);font-size:13.4px;max-width:70ch;">Track A results are ranked by Pareto non-dominance sorting across four objectives (scene failure rate, overall realism, feature diversity, generation time); ties fall back to a weighted linear combination (failure 0.3, realism 0.4, diversity 0.3).</p>
     <div class="data-strip">
       <div class="data-stat"><div class="big">5,000</div><div class="lbl">synthetic in-car scenes</div></div>
-      <div class="data-stat"><div class="big">60</div><div class="lbl">real cabin photos</div></div>
+      <div class="data-stat"><div class="big">60</div><div class="lbl">real cabin photos (30 public, 30 withheld)</div></div>
       <div class="data-stat"><div class="big">42</div><div class="lbl">scene features</div></div>
       <div class="data-stat"><div class="big">MIT</div><div class="lbl">license on non-external data</div></div>
     </div>
@@ -890,25 +890,32 @@
 </section>
 <script>
 // Renders data/leaderboard.json, written by the Starterkit evaluation workflow.
-// Track A: Pareto fronts with a weighted tie-break, as in track_a/track_a_metrics.py of the
-// starter kit; Track B: feature accuracy. Values are inserted with textContent only.
+// Track A: the ranking of rank_contestants in track_a/track_a_metrics.py of the starter kit
+// (overall realism normalized across teams, Pareto fronts, weighted tie-break);
+// Track B: feature accuracy. Values are inserted with textContent only.
 (function(){
+  // Realism metrics that are better when lower (REALISM_DIRECTIONS in track_a_metrics.py);
+  // every other realism_* metric is better when higher.
+  var REALISM_LOWER = ['kl_divergence', 'mse', 'classifier_perceptual_loss', 'vgg_perceptual_distance',
+                       'glcm_texture_distance', 'texture_similarity', 'wasserstein_distance', 'fid', 'kid_mean'];
   var TRACKS = [
-    {id: 'track_a', title: 'Track A \u2014 Test Generation',
-     note: 'Ranked by Pareto front over scene and feature failure rate, realism score, feature diversity, ' +
-           'and generation time; ties within a front are broken by a weighted score ' +
-           '(failure 0.3, realism 0.4, diversity 0.3).',
-     pareto: {objectives: [['scene_failure_rate', 'max'], ['feature_failure_rate', 'max'], ['realism_score', 'max'],
-                           ['feature_diversity', 'max'], ['generation_seconds_per_scene', 'min']],
-              weights: {scene_failure_rate: 0.15, feature_failure_rate: 0.15, realism_score: 0.4,
-                        feature_diversity: 0.3}},
+    {id: 'track_a', title: 'Track A — Test Generation',
+     note: 'Ranked by Pareto front over scene failure rate, overall realism, feature diversity, and generation ' +
+           'time; ties within a front are broken by a weighted score (failure 0.3, realism 0.4, diversity 0.3). ' +
+           'Overall realism is the mean of the realism metrics, each min-max normalized across the teams shown, ' +
+           'so it changes as teams submit. Teams missing an objective are listed without a front.',
+     pareto: {objectives: [['scene_failure_rate', 'max'], ['realism', 'max'], ['feature_diversity', 'max'],
+                           ['generation_seconds_per_scene', 'min']],
+              weights: {scene_failure_rate: 0.3, realism: 0.4, feature_diversity: 0.3}},
      columns: [['scene_failure_rate', 'Scene failure', 'pct'], ['feature_failure_rate', 'Feature failure', 'pct'],
-               ['realism_score', 'Realism', 3], ['feature_diversity', 'Diversity', 3],
+               ['realism', 'Realism', 3], ['feature_diversity', 'Diversity', 3],
                ['generation_seconds_per_scene', 's / scene', 2]]},
-    {id: 'track_b', title: 'Track B \u2014 System Development', sort: 'accuracy',
-     note: 'Ordered by feature accuracy.',
-     columns: [['accuracy', 'Feature acc.', 'pct'], ['scene_exact_match', 'Scene exact', 'pct'],
-               ['latency_seconds_mean', 's / scene', 2]]}
+    {id: 'track_b', title: 'Track B — System Development', sort: 'accuracy',
+     note: 'Ordered by feature accuracy over all evaluated scenes; seconds per scene are measured by the ' +
+           'organizers for the whole prediction run, including model loading.',
+     columns: [['accuracy', 'Feature acc.', 'pct'], ['accuracy_real', 'Real', 'pct'],
+               ['accuracy_synthetic', 'Synthetic', 'pct'], ['scene_exact_match', 'Scene exact', 'pct'],
+               ['runner_seconds_per_scene', 's / scene', 2]]}
   ];
 
   function el(tag, text, className) {
@@ -918,29 +925,66 @@
     return node;
   }
   function format(value, digits) {
-    if (typeof value !== 'number' || !isFinite(value)) return '\u2013';
+    if (typeof value !== 'number' || !isFinite(value)) return '–';
     var text = digits === 'pct' ? (value * 100).toFixed(1) + '%' : value.toFixed(digits);
     return text.replace(/^-(?=0(\.0*)?%?$)/, '');
   }
-  // Missing values count as the worst possible value.
-  function metric(entry, key, direction) {
-    var value = entry.metrics && entry.metrics[key];
-    if (typeof value === 'number' && isFinite(value)) return value;
-    return direction === 'min' ? Infinity : -Infinity;
+  // A finite number or null; 'realism' is the overall realism computed by setRealism.
+  function value(entry, key) {
+    var v = key === 'realism' ? entry._realism : entry.metrics && entry.metrics[key];
+    return typeof v === 'number' && isFinite(v) ? v : null;
+  }
+  // Overall realism: the mean of an entry's realism_* metrics, each min-max normalized across the
+  // entries and reversed when lower is better; a metric with the same value everywhere scores 0.5.
+  function setRealism(entries) {
+    var keys = {};
+    entries.forEach(function(entry) {
+      Object.keys(entry.metrics || {}).forEach(function(key) {
+        if (key.indexOf('realism_') === 0 && value(entry, key) !== null) keys[key] = true;
+      });
+    });
+    var totals = entries.map(function() { return {sum: 0, count: 0}; });
+    Object.keys(keys).forEach(function(key) {
+      var present = [];
+      entries.forEach(function(entry, index) {
+        var v = value(entry, key);
+        if (v !== null) present.push([index, v]);
+      });
+      var values = present.map(function(item) { return item[1]; });
+      var low = Math.min.apply(null, values), high = Math.max.apply(null, values);
+      var lower = REALISM_LOWER.indexOf(key.slice('realism_'.length)) >= 0;
+      present.forEach(function(item) {
+        var score = 0.5;
+        if (high !== low) {
+          score = (item[1] - low) / (high - low);
+          if (lower) score = 1 - score;
+        }
+        totals[item[0]].sum += score;
+        totals[item[0]].count += 1;
+      });
+    });
+    entries.forEach(function(entry, index) {
+      entry._realism = totals[index].count ? totals[index].sum / totals[index].count : null;
+    });
   }
   function dominates(first, second, objectives) {
     var better = false;
     for (var i = 0; i < objectives.length; i++) {
       var key = objectives[i][0], max = objectives[i][1] === 'max';
-      var a = metric(first, key, objectives[i][1]), b = metric(second, key, objectives[i][1]);
+      var a = value(first, key), b = value(second, key);
       if (max ? a < b : a > b) return false;
       if (max ? a > b : a < b) better = true;
     }
     return better;
   }
-  // Sets _front (1 = not dominated) and _score (weighted sum of min-max normalized metrics).
+  // Sets _front (1 = not dominated, null = not ranked because an objective is missing) and _score
+  // (weighted sum of the objectives min-max normalized across the ranked entries).
   function paretoRank(entries, pareto) {
-    var remaining = entries.slice(), front = 1;
+    var rankable = entries.filter(function(entry) {
+      return pareto.objectives.every(function(objective) { return value(entry, objective[0]) !== null; });
+    });
+    entries.forEach(function(entry) { entry._front = null; entry._score = null; });
+    var remaining = rankable.slice(), front = 1;
     while (remaining.length) {
       var current = remaining.filter(function(entry) {
         return !remaining.some(function(other) { return dominates(other, entry, pareto.objectives); });
@@ -949,34 +993,40 @@
       remaining = remaining.filter(function(entry) { return current.indexOf(entry) < 0; });
       front++;
     }
-    var keys = Object.keys(pareto.weights), ranges = {};
+    var keys = Object.keys(pareto.weights);
+    var ranges = {};
     keys.forEach(function(key) {
-      var values = entries.map(function(entry) { return metric(entry, key, 'max'); }).filter(isFinite);
-      ranges[key] = values.length ? [Math.min.apply(null, values), Math.max.apply(null, values)] : [0, 0];
+      var values = rankable.map(function(entry) { return value(entry, key); });
+      ranges[key] = [Math.min.apply(null, values), Math.max.apply(null, values)];
     });
-    entries.forEach(function(entry) {
+    rankable.forEach(function(entry) {
       entry._score = keys.reduce(function(sum, key) {
-        var value = metric(entry, key, 'max'), low = ranges[key][0], high = ranges[key][1];
-        var normalized = !isFinite(value) ? 0 : (high > low ? (value - low) / (high - low) : 1);
-        return sum + pareto.weights[key] * normalized;
+        var low = ranges[key][0], high = ranges[key][1];
+        return sum + pareto.weights[key] * (high > low ? (value(entry, key) - low) / (high - low) : 1);
       }, 0);
     });
+  }
+  function newer(a, b) { return String(b.evaluated_at).localeCompare(String(a.evaluated_at)); }
+  function byPareto(a, b) {
+    var frontA = a._front === null ? Infinity : a._front, frontB = b._front === null ? Infinity : b._front;
+    if (frontA !== frontB) return frontA - frontB;
+    var scoreA = a._score === null ? -Infinity : a._score, scoreB = b._score === null ? -Infinity : b._score;
+    return (scoreB - scoreA) || newer(a, b);
   }
   // Each team's best submission, ranked against the other teams' best submissions.
   function rank(entries, track) {
     var own = entries.filter(function(entry) { return entry.track === track.id; });
-    var compare = track.pareto
-      ? function(a, b) { return (a._front - b._front) || (b._score - a._score) ||
-                                String(b.evaluated_at).localeCompare(String(a.evaluated_at)); }
-      : function(a, b) { return (metric(b, track.sort, 'max') - metric(a, track.sort, 'max')) ||
-                                String(b.evaluated_at).localeCompare(String(a.evaluated_at)); };
-    if (track.pareto) paretoRank(own, track.pareto);
+    var compare = track.pareto ? byPareto : function(a, b) {
+      var va = value(a, track.sort), vb = value(b, track.sort);
+      return ((vb === null ? -Infinity : vb) - (va === null ? -Infinity : va)) || newer(a, b);
+    };
+    if (track.pareto) { setRealism(own); paretoRank(own, track.pareto); }
     var best = {};
     own.slice().sort(compare).forEach(function(entry) {
       if (!best[entry.team_id]) best[entry.team_id] = entry;
     });
     var rows = Object.keys(best).map(function(key) { return best[key]; });
-    if (track.pareto) paretoRank(rows, track.pareto);
+    if (track.pareto) { setRealism(rows); paretoRank(rows, track.pareto); }
     return rows.sort(compare);
   }
   function renderTrack(container, track, rows) {
@@ -999,9 +1049,9 @@
       var row = el('tr');
       row.appendChild(el('td', String(index + 1), 'num'));
       row.appendChild(el('td', entry.display_name || entry.team_id));
-      if (track.pareto) row.appendChild(el('td', String(entry._front), 'num'));
+      if (track.pareto) row.appendChild(el('td', entry._front === null ? '–' : String(entry._front), 'num'));
       track.columns.forEach(function(column) {
-        row.appendChild(el('td', format(entry.metrics && entry.metrics[column[0]], column[2]), 'num'));
+        row.appendChild(el('td', format(value(entry, column[0]), column[2]), 'num'));
       });
       row.appendChild(el('td', String(entry.evaluated_at || '').slice(0, 10), 'num'));
       row.appendChild(el('td', entry.hardware || ''));
@@ -1062,8 +1112,8 @@
         <div class="steps">
           <div class="step"><span class="idx">01</span><p>Email <code>lev.sorokin@tum.de</code> with subject <code>ISU-Challenge Registration Track A/B</code>, stating team or participant name, affiliation, and address — a team name is encouraged if you're entering as a group.</p></div>
           <div class="step"><span class="idx">02</span><p>Build against the starter kit for one or both tracks. Registration deadlines and platform details are announced at competition launch. Ongoing communication with organizers and other teams happens over Discord; an invite is sent after registration.</p></div>
-          <div class="step"><span class="idx">03</span><p><b>Track A submission:</b> generation code that the organizers run on withheld scenes, preserving the required semantic and spatial ground truth.</p></div>
-          <div class="step"><span class="idx">04</span><p><b>Track B submission:</b> model files, parameters, inference or training code, and predictions in the required JSON format.</p></div>
+          <div class="step"><span class="idx">03</span><p><b>Track A submission:</b> generation code (a <code>Translator</code>) and a <code>Dockerfile</code>, which the organizers run on the 30 withheld evaluation scenes; outputs must preserve the required semantic and spatial ground truth.</p></div>
+          <div class="step"><span class="idx">04</span><p><b>Track B submission:</b> inference code (an <code>ISUSystem</code>) and a <code>Dockerfile</code> with its model files, which the organizers run on the evaluation scenes.</p></div>
           <div class="step"><span class="idx">05</span><p>Submissions pass automated integrity and reproducibility checks, and all submissions are additionally reviewed manually.</p></div>
         </div>
       </div>
@@ -1073,7 +1123,7 @@
         <div class="prize-row">
           <div class="prize-box"><div class="big">1st–3rd</div><div class="lbl">token packages in total up to $1,000 / track</div></div>
         </div> -->
-        <p style="color:var(--muted);font-size:13.6px;margin-top:16px;">Teams are invited to submit solution papers to the ICSE 2027 Competition Track proceedings. Submissions are reviewed on soundness, writing quality, and replicability. Novel approaches can be invited on methodological merit even outside the top three track score rankings. Authors of accepted papers will be invited to present their approach at the conference in Dublin, Ireland in May 2026. Accepted papers will be published in the conference proceedings.</p>
+        <p style="color:var(--muted);font-size:13.6px;margin-top:16px;">Teams are invited to submit solution papers to the ICSE 2027 Competition Track proceedings. Submissions are reviewed on soundness, writing quality, and replicability. Novel approaches can be invited on methodological merit even outside the top three track score rankings. Authors of accepted papers will be invited to present their approach at the conference in Dublin, Ireland in May 2027. Accepted papers will be published in the conference proceedings.</p>
       </div>
     </div>
   </div>
@@ -1104,7 +1154,7 @@
       <div class="faq-col a">
         <h3><span class="tag">A</span> Track A</h3>
         <details class="faq"><summary>What counts as a valid test input?</summary><div class="a-body">Any synthetic in-car scene from the starter kit, together with its available auxiliary channels — depth maps, semantic segmentation, edge information.</div></details>
-        <details class="faq"><summary>What must the output look like?</summary><div class="a-body">A transformed scene dataset plus the reproducible code used to make it. Each scene must preserve the semantic content and spatial geometry of its source, so the provided ground-truth labels stay valid.</div></details>
+        <details class="faq"><summary>What must the output look like?</summary><div class="a-body">Your generation code and a Dockerfile; the organizers run it on the 30 withheld evaluation scenes and score the images it produces. Each scene must preserve the semantic content and spatial geometry of its source, so the provided ground-truth labels stay valid.</div></details>
         <details class="faq"><summary>What does "preserving ground truth" mean?</summary><div class="a-body">Appearance may change — clothing, texture, material — but location and geometry may not. No adding, removing, moving, or reshaping annotated people or objects, and no altered spatial relationships.</div></details>
         <details class="faq"><summary>Do I need to generate new labels?</summary><div class="a-body">No — Track A is built around label-preserving transforms, so the existing labels remain valid as-is.</div></details>
         <details class="faq"><summary>What if my transform changes the segmentation?</summary><div class="a-body">Then the scene no longer satisfies Track A's validity requirement and won't score.</div></details>
@@ -1114,10 +1164,10 @@
       <div class="faq-col b">
         <h3><span class="tag">B</span> Track B</h3>
         <details class="faq"><summary>What does the system need to predict?</summary><div class="a-body">The observable features in the label JSON — phone use, occupancy, seat-belt status, suitcase presence/location, beverage objects, baby-seat configuration, and related cabin features — using the schema's feature names and allowed values.</div></details>
-        <details class="faq"><summary>Where do I get real training data?</summary><div class="a-body">50 organizer-collected real cabin images with labels. A recording script and instructions are provided if you want to collect more.</div></details>
+        <details class="faq"><summary>Where do I get real training data?</summary><div class="a-body">The 30 real cabin photos of the base dataset (<code>sample_00000</code> to <code>sample_00029</code>), each with the label of its scene. The other 30 are withheld for the evaluation and may not be used. You may collect more real data for the competition features.</div></details>
         <details class="faq"><summary>What format should predictions use?</summary><div class="a-body">Strict JSON using the prescribed feature names, one value per evaluated feature, chosen from that feature's allowed values.</div></details>
         <details class="faq"><summary>How is accuracy calculated?</summary><div class="a-body">Feature-level comparison against ground truth, plus scene-level exact match when every evaluated feature for a scene is correct. Missing predictions count as incorrect.</div></details>
-        <details class="faq"><summary>Which images are used for evaluation?</summary><div class="a-body">Starter-kit synthetic and real images for development; a withheld extended dataset spanning both domains for final evaluation — don't over-fit to one visual domain.</div></details>
+        <details class="faq"><summary>Which images are used for evaluation?</summary><div class="a-body">Track A: 30 withheld scenes with a real photo. Track B: 30 withheld real photos and 500 synthetic scenes withheld from the published datasets — don't over-fit to one visual domain.</div></details>
         <details class="faq"><summary>Which model should I use?</summary><div class="a-body">The starter kit ships a baseline on <code>Qwen/Qwen2.5-VL-3B-Instruct</code>, but final evaluation runs on whatever system you submit — the baseline isn't mandatory.</div></details>
         <details class="faq"><summary>How is latency measured?</summary><div class="a-body">Time to process one image and return its Track B prediction, on a <code>g6e.2xlarge</code> EC2 instance with an NVIDIA L40S GPU, for comparable numbers across teams.</div></details>
         <details class="faq"><summary>Can I use external data or models?</summary><div class="a-body">Yes — document external datasets, pretrained models, and dependencies, and provide reproducible inference or training code. All artefacts must comply with their licenses.</div></details>
