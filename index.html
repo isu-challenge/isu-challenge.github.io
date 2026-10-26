@@ -847,7 +847,7 @@
       <div class="metric-panel a">
         <div class="mp-head"><div class="tag">A</div><h3>Track A metrics</h3></div>
         <div class="metric-list">
-          <div class="metric-row"><div class="m-name">Failure rate</div><div class="m-desc">Scenes (and features) where the answers of <code>Qwen/Qwen2.5-VL-3B-Instruct</code> for the generated image differ from its answers for the real photo of the same scene, on the 30 withheld scenes with a real photo. A separate industrial system is added for final evaluation.</div></div>
+          <div class="metric-row"><div class="m-name">Failure rate</div><div class="m-desc">Scenes (and features) where the answers of <code>Qwen/Qwen2.5-VL-3B-Instruct</code> for the generated image differ from its answers for the real photo of the same scene, on withheld synthetic scenes and their real-photo pairs, none of which are included in the dataset. A separate industrial system is added for final evaluation.</div></div>
           <div class="metric-row"><div class="m-name">Realism</div><div class="m-desc">Published image-realism metrics [2] of the generated images against the real photos; each metric is min-max normalized across the teams and averaged into an overall realism.</div></div>
           <div class="metric-row"><div class="m-name">Diversity</div><div class="m-desc">Feature diversity of failing scenes, following ISU-Test [1]; visual diversity measured with CLIP (clothing colour, style, and similar appearance shifts).</div></div>
           <div class="metric-row"><div class="m-name">Efficiency</div><div class="m-desc">Generation time, measured on a standardized <code>g6e.2xlarge</code> EC2 instance at final evaluation.</div></div>
@@ -857,8 +857,8 @@
         <div class="mp-head"><div class="tag">B</div><h3>Track B metrics</h3></div>
         <div class="metric-list">
           <div class="metric-row"><div class="m-name">Accuracy</div><div class="m-desc">Feature-level and scene-level exact-match performance on visual-question-answering predictions.</div></div>
-          <div class="metric-row"><div class="m-name">Latency</div><div class="m-desc">Time to process a scene and return a prediction, measured on <code>g6e.2xlarge</code> with an NVIDIA L40S GPU.</div></div>
-          <div class="metric-row"><div class="m-name">Withheld data</div><div class="m-desc">Systems are scored on 30 withheld real photos and 500 withheld synthetic scenes.</div></div>
+          <div class="metric-row"><div class="m-name">Latency</div><div class="m-desc">Mean execution time of <code>predict()</code> per image after the model has been loaded; final timing on <code>g6e.2xlarge</code> with an NVIDIA L40S GPU.</div></div>
+          <div class="metric-row"><div class="m-name">Withheld data</div><div class="m-desc">Systems are scored on a separate evaluation dataset of synthetic and real images, similar in type to those provided.</div></div>
         </div>
       </div>
     </div>
@@ -877,7 +877,7 @@
     <div class="section-head">
       <span class="eyebrow"><svg class="bracket" viewBox="0 0 12 12"><path d="M1 4V1h3M11 4V1H8M1 8v3h3M11 8v3H8"/></svg>Leaderboard</span>
       <h2>Live rankings, once scoring opens.</h2>
-      <p>Track A and Track B standings will populate here as submissions are scored against the reference pipelines.</p>
+      <p>Track A and Track B standings will populate here as submissions are scored against the reference pipelines. Submissions are scored on the 30 withheld real-photo scenes plus additional images that are not included in the dataset.</p>
     </div>
     <div class="panel" id="leaderboard-tables" style="display:none"></div>
     <div class="panel leaderboard-empty" id="leaderboard-empty">
@@ -1088,7 +1088,7 @@
     <div class="route">
       <div class="route-line">
         <div class="stop milestone"><span class="marker"></span><span class="when">Sep 2026</span><span class="what">Competition launch, starter-kit release</span></div>
-                <div class="stop"><span class="marker"></span><span class="when">27 Nov 2026</span><span class="what">Participant submissions (data & reports)</span></div>
+                <div class="stop"><span class="marker"></span><span class="when">27 Nov 2026</span><span class="what">Participant submissions (code & reports)</span></div>
         <div class="stop"><span class="marker"></span><span class="when">4 Dec 2026</span><span class="what">Competition report submissions</span></div>
         <div class="stop"><span class="marker"></span><span class="when">16 Dec 2026</span><span class="what">Reviewer response issued</span></div>
         <!-- <div class="stop"><span class="marker"></span><span class="when">6 Jan 2027</span><span class="what">Paper revisions due</span></div>
@@ -1110,9 +1110,9 @@
       <div class="panel">
         <h3>Registration &amp; submission</h3>
         <div class="steps">
-          <div class="step"><span class="idx">01</span><p>Email <code>lev.sorokin@tum.de</code> with subject <code>ISU-Challenge Registration Track A/B</code>, stating team or participant name, affiliation, and address — a team name is encouraged if you're entering as a group.</p></div>
-          <div class="step"><span class="idx">02</span><p>Build against the starter kit for one or both tracks. Registration deadlines and platform details are announced at competition launch. Ongoing communication with organizers and other teams happens over Discord; an invite is sent after registration.</p></div>
-          <div class="step"><span class="idx">03</span><p><b>Track A submission:</b> generation code (a <code>Translator</code>) and a <code>Dockerfile</code>, which the organizers run on the 30 withheld evaluation scenes; outputs must preserve the required semantic and spatial ground truth.</p></div>
+          <div class="step"><span class="idx">01</span><p>Register via the <a href="#" onclick="document.getElementById('registerModal').classList.add('active');return false;">form on this website</a>, or email <code>lev.sorokin@tum.de</code> with subject <code>ISU-Challenge Registration Track A/B</code>, stating team or participant name, affiliation, address, and the GitHub usernames of all team members (only pull requests from registered accounts are evaluated) — a team name is encouraged if you're entering as a group.</p></div>
+          <div class="step"><span class="idx">02</span><p>Build against the starter kit for one or both tracks. Ongoing communication with organizers and other teams happens over <a href="https://discord.com/invite/68k5AyaJDw" target="_blank" rel="noopener">Discord</a>, which everyone is welcome to join; joining Discord does not replace registration, which is still required via the website or email (step 01).</p></div>
+          <div class="step"><span class="idx">03</span><p><b>Track A submission:</b> generation code (a <code>Translator</code>) and a <code>Dockerfile</code>, which the organizers withheld evaluation scenes; outputs must preserve the required semantic and spatial ground truth.</p></div>
           <div class="step"><span class="idx">04</span><p><b>Track B submission:</b> inference code (an <code>ISUSystem</code>) and a <code>Dockerfile</code> with its model files, which the organizers run on the evaluation scenes.</p></div>
           <div class="step"><span class="idx">05</span><p>Submissions pass automated integrity and reproducibility checks, and all submissions are additionally reviewed manually.</p></div>
         </div>
@@ -1154,24 +1154,40 @@
       <div class="faq-col a">
         <h3><span class="tag">A</span> Track A</h3>
         <details class="faq"><summary>What counts as a valid test input?</summary><div class="a-body">Any synthetic in-car scene from the starter kit, together with its available auxiliary channels — depth maps, semantic segmentation, edge information.</div></details>
-        <details class="faq"><summary>What must the output look like?</summary><div class="a-body">Your generation code and a Dockerfile; the organizers run it on the 30 withheld evaluation scenes and score the images it produces. Each scene must preserve the semantic content and spatial geometry of its source, so the provided ground-truth labels stay valid.</div></details>
+        <details class="faq"><summary>What must the output look like?</summary><div class="a-body">Your generation code and a Dockerfile; the organizers run it on withheld synthetic scenes and their real-photo pairs, none of which are included in the dataset, and score the images it produces. Each scene must preserve the semantic content and spatial geometry of its source, so the provided ground-truth labels stay valid.</div></details>
         <details class="faq"><summary>What does "preserving ground truth" mean?</summary><div class="a-body">Appearance may change — clothing, texture, material — but location and geometry may not. No adding, removing, moving, or reshaping annotated people or objects, and no altered spatial relationships.</div></details>
         <details class="faq"><summary>Do I need to generate new labels?</summary><div class="a-body">No — Track A is built around label-preserving transforms, so the existing labels remain valid as-is.</div></details>
         <details class="faq"><summary>What if my transform changes the segmentation?</summary><div class="a-body">Then the scene no longer satisfies Track A's validity requirement and won't score.</div></details>
         <details class="faq"><summary>Can I move, add, or remove objects or people?</summary><div class="a-body">No — those operations invalidate the provided ground truth and are not permitted.</div></details>
-        <details class="faq"><summary>Can I use LLMs or diffusion models to generate images?</summary><div class="a-body">Yes, provided results stay realistic, reproducible, and semantically valid. Declare any model or API dependencies, and respect applicable token or compute limits.</div></details>
+        <details class="faq"><summary>Can I use LLMs or diffusion models to generate images?</summary><div class="a-body">Yes, provided results stay realistic, reproducible, and semantically valid. The evaluation runs without network access, so external APIs can't be used: include models in the submission or download them while the Docker image is built.</div></details>
+        <details class="faq"><summary>Can I recolour the driver's shirt if the seat belt stays unchanged?</summary><div class="a-body">Yes — recolouring clothing, including to a dark colour, is fine; clothing colour is not a scored feature in Track A. The seat belt must remain physically present and in its original position: hiding, removing, or moving it is not acceptable.</div></details>
+        <details class="faq"><summary>Can labels, instance masks, depth maps, and Canny maps be used as generator inputs?</summary><div class="a-body">Yes, they may guide generation as long as the labels themselves are not changed. During official evaluation the evaluator calls <code>translate()</code> for every scene, with <code>auxiliary_data</code> holding the scene stem, its label, and its Canny, instance-segmentation, and depth images — these are provided for withheld scenes too.</div></details>
+        <details class="faq"><summary>Can the real photos be used for training or fitting models?</summary><div class="a-body">Yes, the first 30 of the 60 real photos. These are the only ones published; the other 30 are withheld and, together with additional images not included in the dataset, used for evaluation. At inference time the corresponding real photo of a scene is not accessible and must not be used.</div></details>
+        <details class="faq"><summary>How is generation efficiency measured?</summary><div class="a-body">The evaluation runs your code on the withheld scenes and measures the wall-clock time of the entire run, including model loading, divided by the number of scenes. Use the latest <a href="https://github.com/isu-challenge/Starterkit-ICSE-2027" target="_blank" rel="noopener">starter kit</a>: an earlier evaluator version wrongly divided the total time by the 60 paired scenes.</div></details>
+        <details class="faq"><summary>Must generated images be bit-identical across runs or GPUs?</summary><div class="a-body">No. Small numerical differences from GPU hardware or half-precision computation are acceptable, provided the generated content stays the same. Fix random seeds to improve reproducibility.</div></details>
+        <details class="faq"><summary>Are the auxiliary-channel inconsistencies in phone-use scenes known? Are the masks used for scoring?</summary><div class="a-body">Yes, the reported inconsistencies are confirmed. The masks are not used for scoring: the SAM validity check compares the generated image with the simulated RGB render, and manual review uses the RGB render as well.</div></details>
       </div>
       <div class="faq-col b">
         <h3><span class="tag">B</span> Track B</h3>
-        <details class="faq"><summary>What does the system need to predict?</summary><div class="a-body">The observable features in the label JSON — phone use, occupancy, seat-belt status, suitcase presence/location, beverage objects, baby-seat configuration, and related cabin features — using the schema's feature names and allowed values.</div></details>
-        <details class="faq"><summary>Where do I get real training data?</summary><div class="a-body">The 30 real cabin photos of the base dataset (<code>sample_00000</code> to <code>sample_00029</code>), each with the label of its scene. The other 30 are withheld for the evaluation and may not be used. You may collect more real data for the competition features.</div></details>
+        <details class="faq"><summary>What does the system need to predict?</summary><div class="a-body">The features marked for Track B in the <a href="feature-schema.html">feature schema</a> — occupancy, gender, emotion, clothing and object colours, seat-belt status, phone use, beverage objects, suitcase, baby-seat configuration, and related cabin features — using the schema's feature names and allowed values.</div></details>
+        <details class="faq"><summary>Where do I get real training data?</summary><div class="a-body">The 30 real cabin photos of the base dataset (<code>sample_00000</code> to <code>sample_00029</code>), each with the label of its scene. The other 30 are withheld for evaluation. You may collect more real data for the competition features.</div></details>
         <details class="faq"><summary>What format should predictions use?</summary><div class="a-body">Strict JSON using the prescribed feature names, one value per evaluated feature, chosen from that feature's allowed values.</div></details>
         <details class="faq"><summary>How is accuracy calculated?</summary><div class="a-body">Feature-level comparison against ground truth, plus scene-level exact match when every evaluated feature for a scene is correct. Missing predictions count as incorrect.</div></details>
-        <details class="faq"><summary>Which images are used for evaluation?</summary><div class="a-body">Track A: 30 withheld scenes with a real photo. Track B: 30 withheld real photos and 500 synthetic scenes withheld from the published datasets — don't over-fit to one visual domain.</div></details>
+        <details class="faq"><summary>Which images are used for evaluation?</summary><div class="a-body">Both tracks are evaluated on the 30 withheld real-photo scenes plus additional images not included in the dataset — Track A: synthetic scenes paired with real photos; Track B: synthetic and real images similar in type to those provided. Don't over-fit to one visual domain.</div></details>
         <details class="faq"><summary>Which model should I use?</summary><div class="a-body">The starter kit ships a baseline on <code>Qwen/Qwen2.5-VL-3B-Instruct</code>, but final evaluation runs on whatever system you submit — the baseline isn't mandatory.</div></details>
-        <details class="faq"><summary>How is latency measured?</summary><div class="a-body">Time to process one image and return its Track B prediction, on a <code>g6e.2xlarge</code> EC2 instance with an NVIDIA L40S GPU, for comparable numbers across teams.</div></details>
+        <details class="faq"><summary>How is latency measured?</summary><div class="a-body">Mean execution time of <code>predict()</code> per image after the model has been loaded. Total execution time, including model loading, is reported separately and must remain within the two-hour limit. The leaderboard runs on an NVIDIA L4 GPU (24 GB); final timing is measured on a <code>g6e.2xlarge</code> instance with an NVIDIA L40S GPU.</div></details>
         <details class="faq"><summary>Can I use external data or models?</summary><div class="a-body">Yes — document external datasets, pretrained models, and dependencies, and provide reproducible inference or training code. All artefacts must comply with their licenses.</div></details>
+        <details class="faq"><summary>Which features are scored, and are height, weight, and head angles included?</summary><div class="a-body">Use the latest <a href="https://github.com/isu-challenge/Starterkit-ICSE-2027" target="_blank" rel="noopener">starter kit</a>. The scored features are those marked for Track B in the <a href="feature-schema.html">feature schema</a> (<code>TRACK_B_FEATURES</code> in <code>track_b/track_b_evaluator.py</code>). Height, weight, head angles, lighting, and environment are not scored, so no tolerance applies to these features.</div></details>
+        <details class="faq"><summary>How are accuracy, exact match, and latency used in the ranking?</summary><div class="a-body">The leaderboard ranks submissions by feature-level accuracy and reports scene-level exact match and latency alongside it. Latency is the mean execution time of <code>predict()</code> per image after the model has been loaded. Total execution time, including model loading, is reported separately and must remain within the two-hour limit.</div></details>
+        <details class="faq"><summary>Can systems be trained or fine-tuned on the available real photos and labels?</summary><div class="a-body">Yes. Participants may train or fine-tune their systems using the images available to them. The final evaluation uses a separate dataset, with images similar in type to those provided in the challenge.</div></details>
+        <details class="faq"><summary>What files must be submitted for Track B?</summary><div class="a-body"><code>system.py</code>, containing the system implementation, and a <code>Dockerfile</code> that builds on the provided base image, <code>isu-challenge-base</code>. Model weights may either be included in the submission, up to a maximum of 2 GB, or downloaded during the Docker image build; internet access is available during the build, e.g. to download models from Hugging Face. The final Docker image must not exceed 40 GB. Evaluation runs without internet access on a GPU with at least 24 GB of memory. Further details are under &ldquo;Official Submission&rdquo; in <code>track_b/README.md</code> of the <a href="https://github.com/isu-challenge/Starterkit-ICSE-2027" target="_blank" rel="noopener">starter kit</a>.</div></details>
       </div>
+    </div>
+    <div class="faq-col" style="margin-top:28px;">
+      <h3>Both tracks</h3>
+        <details class="faq"><summary>How should submissions be submitted?</summary><div class="a-body">Through an encrypted pull request to the <a href="https://github.com/isu-challenge/Starterkit-ICSE-2027" target="_blank" rel="noopener">starter kit</a> repository; follow the instructions under &ldquo;Submitting via pull request&rdquo; in its README. Every pull request is evaluated automatically, and the results are posted as a pull request comment and displayed on the <a href="#leaderboard">leaderboard</a>. Track A uses the same submission mechanism, with <code>translator.py</code> as the required implementation file.</div></details>
+        <details class="faq"><summary>What is the submission deadline?</summary><div class="a-body">27 November 2026, Anywhere on Earth (AoE).</div></details>
+        <details class="faq"><summary>What are the paper submission format and page limit?</summary><div class="a-body">The paper is due on 4 December 2026. The required format and page limit are specified in the <a href="https://conf.researchr.org/home/icse-2027" target="_blank" rel="noopener">ICSE 2027</a> competition track call.</div></details>
     </div>
   </div>
 </section>
@@ -1221,6 +1237,7 @@
           <a href="https://huggingface.co/datasets/ISU-Test/isu-challenge-dataset" target="_blank" rel="noopener">Dataset ↗</a>
           <a href="https://github.com/isu-challenge/Starterkit-ICSE-2027" target="_blank" rel="noopener">Starter Kit ↗</a>
           <a href="https://www.kaggle.com/competitions/isu-challenge" target="_blank" rel="noopener">Kaggle ↗</a>
+          <a href="https://discord.com/invite/68k5AyaJDw" target="_blank" rel="noopener">Discord ↗</a>
         </div>
       </div>
       <div>
