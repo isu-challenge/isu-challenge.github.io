@@ -1,4 +1,39 @@
 {
   "schema": 1,
-  "entries": []
+  "entries": [
+    {
+      "team_id": "organizers",
+      "display_name": "Organizers (dry run)",
+      "track": "track_b",
+      "pull_request": 12,
+      "commit": "b74200c412f87aba9a7d3d079424a96b27653950",
+      "evaluated_at": "2026-11-03T12:01:50+00:00",
+      "hardware": "NVIDIA L4",
+      "evaluator_ref": "7039980d89c7b565015284acf579945d984441a7",
+      "efficiency_self_reported": false,
+      "metrics": {
+        "accuracy": 0.6783886873197507,
+        "scene_exact_match": 0.0037735849056603774,
+        "correct_features": 7292,
+        "evaluated_features": 10749,
+        "latency_seconds_mean": 12.60708220278282,
+        "latency_seconds_total": 6681.753567474894,
+        "wall_seconds_total": 6728.570428863866,
+        "scenes": 530,
+        "missing_predictions": 0,
+        "prediction_errors": 0,
+        "accuracy_real": 0.7807933194154488,
+        "scene_exact_match_real": 0.0,
+        "scenes_real": 30,
+        "accuracy_synthetic": 0.6736124634858812,
+        "scene_exact_match_synthetic": 0.004,
+        "scenes_synthetic": 500,
+        "runner_predict_seconds": 6728.6,
+        "runner_seconds_per_scene": 12.695,
+        "scene_timeouts": 0,
+        "skipped_scenes": 0
+      }
+    }
+  ],
+  "updated_at": "2026-11-03T12:02:08+00:00"
 }
