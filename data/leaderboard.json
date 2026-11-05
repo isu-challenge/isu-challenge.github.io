@@ -117,7 +117,48 @@
         "realism_fid": 132.6399688720703,
         "realism_kid_mean": 0.13065217435359955
       }
+    },
+    {
+      "team_id": "iut-event-horizon",
+      "display_name": "IUT_event_horizon",
+      "track": "track_a",
+      "pull_request": 19,
+      "commit": "cb491d343535a9fc3a6a4566edc3101bd0c94a1b",
+      "evaluated_at": "2026-11-05T09:39:48+00:00",
+      "hardware": "NVIDIA L4",
+      "evaluator_ref": "7039980d89c7b565015284acf579945d984441a7",
+      "metrics": {
+        "scene_failure_rate": 0.7666666666666667,
+        "feature_failure_rate": 0.18157894736842106,
+        "failures": 23,
+        "executed_scenes": 30,
+        "feature_diversity": 0.23287647793576646,
+        "clip_visual_diversity": 0.08980430662631989,
+        "sam_matched_iou": 0.7185080265452287,
+        "sam_boundary_f1": 0.7920297301427894,
+        "semantic_segmentation_score": 0.28149197345477106,
+        "generation_seconds_per_scene": 0.5329253429003681,
+        "scenes": 30,
+        "untranslated_scenes": 0,
+        "scene_timeouts": 0,
+        "realism_exact_match": 0.0,
+        "realism_correlation_coefficient": 0.7407148867456101,
+        "realism_histogram_intersection": 0.7827642532578875,
+        "realism_lbp_histogram_similarity": 0.9278621399176955,
+        "realism_psnr": 13.694390458359665,
+        "realism_ssim": 0.519243139736085,
+        "realism_normalized_mutual_information": 0.12843652674544345,
+        "realism_fractal_dimension_similarity": 0.9857382045013134,
+        "realism_kl_divergence": 0.2763674169125878,
+        "realism_mse": 2800.256078253602,
+        "realism_vgg_perceptual_distance": 0.6832853088776271,
+        "realism_glcm_texture_distance": 4.2964480338192255,
+        "realism_wasserstein_distance": 17.49832268089848,
+        "realism_inception_score_mean": 1.157379388809204,
+        "realism_fid": 129.795654296875,
+        "realism_kid_mean": 0.1131691262125969
+      }
     }
   ],
-  "updated_at": "2026-11-03T12:20:05+00:00"
+  "updated_at": "2026-11-05T09:40:04+00:00"
 }
