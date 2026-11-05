@@ -1029,27 +1029,39 @@
     if (track.pareto) { setRealism(rows); paretoRank(rows, track.pareto); }
     return rows.sort(compare);
   }
-  function renderTrack(container, track, rows) {
+  function renderTrack(container, track, rows, baselines) {
     var section = el('div', null, 'lb-track');
     section.appendChild(el('h3', track.title));
     section.appendChild(el('p', track.note, 'lb-note'));
-    if (!rows.length) {
+    if (rows.length) {
+      section.appendChild(table(track, rows, true));
+    } else {
       section.appendChild(el('p', 'No scored submissions yet.', 'lb-empty-track'));
-      container.appendChild(section);
-      return;
     }
+    if (baselines.length) {
+      // Overall realism of a baseline is normalized together with the ranked teams, for display only.
+      if (track.pareto) baselines.forEach(function(baseline) {
+        var copies = rows.map(function(entry) { return {metrics: entry.metrics}; }).concat([baseline]);
+        setRealism(copies);
+      });
+      section.appendChild(el('p', 'Baselines (not ranked), evaluated by the organizers on the same data:', 'lb-note'));
+      section.appendChild(table(track, baselines, false));
+    }
+    container.appendChild(section);
+  }
+  function table(track, rows, ranked) {
     var table = el('table', null, 'lb-table');
     var headRow = el('tr');
-    ['#', 'Team'].concat(track.pareto ? ['Front'] : [], track.columns.map(function(c) { return c[1]; }),
+    ['#', ranked ? 'Team' : 'Baseline'].concat(track.pareto ? ['Front'] : [], track.columns.map(function(c) { return c[1]; }),
                          ['Evaluated', 'Hardware'])
       .forEach(function(label) { headRow.appendChild(el('th', label)); });
     table.appendChild(el('thead')).appendChild(headRow);
     var body = el('tbody');
     rows.forEach(function(entry, index) {
       var row = el('tr');
-      row.appendChild(el('td', String(index + 1), 'num'));
+      row.appendChild(el('td', ranked ? String(index + 1) : '–', 'num'));
       row.appendChild(el('td', entry.display_name || entry.team_id));
-      if (track.pareto) row.appendChild(el('td', entry._front === null ? '–' : String(entry._front), 'num'));
+      if (track.pareto) row.appendChild(el('td', !ranked || entry._front === null ? '–' : String(entry._front), 'num'));
       track.columns.forEach(function(column) {
         row.appendChild(el('td', format(value(entry, column[0]), column[2]), 'num'));
       });
@@ -1060,17 +1072,20 @@
     table.appendChild(body);
     var scroll = el('div', null, 'lb-scroll');
     scroll.appendChild(table);
-    section.appendChild(scroll);
-    container.appendChild(section);
+    return scroll;
   }
 
   fetch('data/leaderboard.json', {cache: 'no-store'})
     .then(function(response) { return response.ok ? response.json() : null; })
     .then(function(data) {
       var entries = data && Array.isArray(data.entries) ? data.entries : [];
-      if (!entries.length) return;
+      var baselines = data && Array.isArray(data.baselines) ? data.baselines : [];
+      if (!entries.length && !baselines.length) return;
       var container = document.getElementById('leaderboard-tables');
-      TRACKS.forEach(function(track) { renderTrack(container, track, rank(entries, track)); });
+      TRACKS.forEach(function(track) {
+        renderTrack(container, track, rank(entries, track),
+                    baselines.filter(function(entry) { return entry.track === track.id; }));
+      });
       container.style.display = '';
       document.getElementById('leaderboard-empty').style.display = 'none';
     })
@@ -1175,10 +1190,10 @@
         <details class="faq"><summary>How is accuracy calculated?</summary><div class="a-body">Feature-level comparison against ground truth, plus scene-level exact match when every evaluated feature for a scene is correct. Missing predictions count as incorrect.</div></details>
         <details class="faq"><summary>Which images are used for evaluation?</summary><div class="a-body">Both tracks are evaluated on the 30 withheld real-photo scenes plus additional images not included in the dataset — Track A: synthetic scenes paired with real photos; Track B: synthetic and real images similar in type to those provided. Don't over-fit to one visual domain.</div></details>
         <details class="faq"><summary>Which model should I use?</summary><div class="a-body">The starter kit ships a baseline on <code>Qwen/Qwen2.5-VL-3B-Instruct</code>, but final evaluation runs on whatever system you submit — the baseline isn't mandatory.</div></details>
-        <details class="faq"><summary>How is latency measured?</summary><div class="a-body">Mean execution time of <code>predict()</code> per image after the model has been loaded. Total execution time, including model loading, is reported separately and must remain within the two-hour limit. The leaderboard runs on an NVIDIA L4 GPU (24 GB); final timing is measured on a <code>g6e.2xlarge</code> instance with an NVIDIA L40S GPU.</div></details>
+        <details class="faq"><summary>How is latency measured?</summary><div class="a-body">Mean time per <code>predict()</code> call after the model has been loaded, measured by the evaluation runner; each call may take at most 30 seconds. The leaderboard runs on an NVIDIA L4 GPU (24 GB); final timing is measured on a <code>g6e.2xlarge</code> instance with an NVIDIA L40S GPU.</div></details>
         <details class="faq"><summary>Can I use external data or models?</summary><div class="a-body">Yes — document external datasets, pretrained models, and dependencies, and provide reproducible inference or training code. All artefacts must comply with their licenses.</div></details>
         <details class="faq"><summary>Which features are scored, and are height, weight, and head angles included?</summary><div class="a-body">Use the latest <a href="https://github.com/isu-challenge/Starterkit-ICSE-2027" target="_blank" rel="noopener">starter kit</a>. The scored features are those marked for Track B in the <a href="feature-schema.html">feature schema</a> (<code>TRACK_B_FEATURES</code> in <code>track_b/track_b_evaluator.py</code>). Height, weight, head angles, lighting, and environment are not scored, so no tolerance applies to these features.</div></details>
-        <details class="faq"><summary>How are accuracy, exact match, and latency used in the ranking?</summary><div class="a-body">The leaderboard ranks submissions by feature-level accuracy and reports scene-level exact match and latency alongside it. Latency is the mean execution time of <code>predict()</code> per image after the model has been loaded. Total execution time, including model loading, is reported separately and must remain within the two-hour limit.</div></details>
+        <details class="faq"><summary>How are accuracy, exact match, and latency used in the ranking?</summary><div class="a-body">The leaderboard ranks submissions by feature-level accuracy and reports scene-level exact match and latency alongside it. Latency is the mean time per <code>predict()</code> call after the model has been loaded, measured by the evaluation runner.</div></details>
         <details class="faq"><summary>Can systems be trained or fine-tuned on the available real photos and labels?</summary><div class="a-body">Yes. Participants may train or fine-tune their systems using the images available to them. The final evaluation uses a separate dataset, with images similar in type to those provided in the challenge.</div></details>
         <details class="faq"><summary>What files must be submitted for Track B?</summary><div class="a-body"><code>system.py</code>, containing the system implementation, and a <code>Dockerfile</code> that builds on the provided base image, <code>isu-challenge-base</code>. Model weights may either be included in the submission, up to a maximum of 2 GB, or downloaded during the Docker image build; internet access is available during the build, e.g. to download models from Hugging Face. The final Docker image must not exceed 40 GB. Evaluation runs without internet access on a GPU with at least 24 GB of memory. Further details are under &ldquo;Official Submission&rdquo; in <code>track_b/README.md</code> of the <a href="https://github.com/isu-challenge/Starterkit-ICSE-2027" target="_blank" rel="noopener">starter kit</a>.</div></details>
       </div>
