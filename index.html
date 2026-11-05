@@ -427,6 +427,8 @@
   .lb-table th:nth-child(2),.lb-table td:nth-child(2){text-align:left;}
   .lb-table td.num{font-family:var(--font-mono);}
   .lb-table tbody tr:first-child td{color:var(--accent);font-weight:600;}
+  .lb-table tfoot td{color:var(--muted);font-style:italic;}
+  .lb-table tfoot tr:first-child td{border-top:2px solid var(--line);}
   .lb-empty-track{color:var(--muted);font-size:13.4px;}
   .starterkit-panel{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;}
   .starterkit-panel .file-chips{flex:1 1 420px;}
@@ -1033,43 +1035,48 @@
     var section = el('div', null, 'lb-track');
     section.appendChild(el('h3', track.title));
     section.appendChild(el('p', track.note, 'lb-note'));
-    if (rows.length) {
-      section.appendChild(table(track, rows, true));
-    } else {
-      section.appendChild(el('p', 'No scored submissions yet.', 'lb-empty-track'));
-    }
-    if (baselines.length) {
-      // Overall realism of a baseline is normalized together with the ranked teams, for display only.
-      if (track.pareto) baselines.forEach(function(baseline) {
-        var copies = rows.map(function(entry) { return {metrics: entry.metrics}; }).concat([baseline]);
-        setRealism(copies);
-      });
-      section.appendChild(el('p', 'Baselines (not ranked), evaluated by the organizers on the same data:', 'lb-note'));
-      section.appendChild(table(track, baselines, false));
-    }
+    if (!rows.length) section.appendChild(el('p', 'No scored submissions yet.', 'lb-empty-track'));
+    // Overall realism of a baseline is normalized together with the ranked teams, for display only.
+    if (track.pareto) baselines.forEach(function(baseline) {
+      setRealism(rows.map(function(entry) { return {metrics: entry.metrics}; }).concat([baseline]));
+    });
+    if (rows.length || baselines.length) section.appendChild(table(track, rows, baselines));
     container.appendChild(section);
   }
-  function table(track, rows, ranked) {
+  function tableRow(track, entry, rank, name) {
+    var row = el('tr');
+    row.appendChild(el('td', rank, 'num'));
+    row.appendChild(el('td', name));
+    if (track.pareto) row.appendChild(el('td', entry._front === null || entry._front === undefined ? '–' : String(entry._front), 'num'));
+    track.columns.forEach(function(column) {
+      row.appendChild(el('td', format(value(entry, column[0]), column[2]), 'num'));
+    });
+    row.appendChild(el('td', String(entry.evaluated_at || '').slice(0, 10), 'num'));
+    row.appendChild(el('td', entry.hardware || ''));
+    return row;
+  }
+  // Ranked teams in the body; baselines (not ranked) as footer rows.
+  function table(track, rows, baselines) {
     var table = el('table', null, 'lb-table');
     var headRow = el('tr');
-    ['#', ranked ? 'Team' : 'Baseline'].concat(track.pareto ? ['Front'] : [], track.columns.map(function(c) { return c[1]; }),
+    ['#', 'Team'].concat(track.pareto ? ['Front'] : [], track.columns.map(function(c) { return c[1]; }),
                          ['Evaluated', 'Hardware'])
       .forEach(function(label) { headRow.appendChild(el('th', label)); });
     table.appendChild(el('thead')).appendChild(headRow);
     var body = el('tbody');
     rows.forEach(function(entry, index) {
-      var row = el('tr');
-      row.appendChild(el('td', ranked ? String(index + 1) : '–', 'num'));
-      row.appendChild(el('td', entry.display_name || entry.team_id));
-      if (track.pareto) row.appendChild(el('td', !ranked || entry._front === null ? '–' : String(entry._front), 'num'));
-      track.columns.forEach(function(column) {
-        row.appendChild(el('td', format(value(entry, column[0]), column[2]), 'num'));
-      });
-      row.appendChild(el('td', String(entry.evaluated_at || '').slice(0, 10), 'num'));
-      row.appendChild(el('td', entry.hardware || ''));
-      body.appendChild(row);
+      body.appendChild(tableRow(track, entry, String(index + 1), entry.display_name || entry.team_id));
     });
     table.appendChild(body);
+    if (baselines.length) {
+      var foot = el('tfoot');
+      baselines.forEach(function(entry) {
+        var row = tableRow(track, entry, '–', 'Baseline');
+        row.title = (entry.display_name || '') + ' — not ranked, evaluated by the organizers on the same data';
+        foot.appendChild(row);
+      });
+      table.appendChild(foot);
+    }
     var scroll = el('div', null, 'lb-scroll');
     scroll.appendChild(table);
     return scroll;
