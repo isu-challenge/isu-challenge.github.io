@@ -266,9 +266,41 @@
         "scene_timeouts": 0,
         "skipped_scenes": 0
       }
+    },
+    {
+      "team_id": "team-21",
+      "display_name": "Porcupines",
+      "track": "track_b",
+      "pull_request": 16,
+      "commit": "739c5bc239660d036f549f86f242f8be36808705",
+      "evaluated_at": "2026-11-06T10:25:40+00:00",
+      "hardware": "NVIDIA L4",
+      "evaluator_ref": "5b304e5b7330c4dab86dc08a64c4d4b73a5143dc",
+      "metrics": {
+        "accuracy": 0.9893013303563122,
+        "scene_exact_match": 0.8,
+        "correct_features": 10634,
+        "evaluated_features": 10749,
+        "latency_seconds_mean": 0.09095823793311797,
+        "latency_seconds_total": 48.20786610455252,
+        "wall_seconds_total": 55.2568487029057,
+        "scenes": 530,
+        "missing_predictions": 0,
+        "prediction_errors": 0,
+        "accuracy_real": 0.9791231732776617,
+        "scene_exact_match_real": 0.6666666666666666,
+        "scenes_real": 30,
+        "accuracy_synthetic": 0.9897760467380721,
+        "scene_exact_match_synthetic": 0.808,
+        "scenes_synthetic": 500,
+        "runner_predict_seconds": 55.3,
+        "runner_seconds_per_scene": 0.104,
+        "scene_timeouts": 0,
+        "skipped_scenes": 0
+      }
     }
   ],
-  "updated_at": "2026-11-06T08:35:20+00:00",
+  "updated_at": "2026-11-06T10:25:55+00:00",
   "baselines": [
     {
       "team_id": "organizers",
