@@ -298,9 +298,41 @@
         "scene_timeouts": 0,
         "skipped_scenes": 0
       }
+    },
+    {
+      "team_id": "cast",
+      "display_name": "CAST",
+      "track": "track_b",
+      "pull_request": 21,
+      "commit": "de4af640ef6561cf1fc66ae524d8c41a51623010",
+      "evaluated_at": "2026-11-06T12:53:16+00:00",
+      "hardware": "NVIDIA L4",
+      "evaluator_ref": "5b304e5b7330c4dab86dc08a64c4d4b73a5143dc",
+      "metrics": {
+        "accuracy": 0.9998139361801098,
+        "scene_exact_match": 0.9981132075471698,
+        "correct_features": 10747,
+        "evaluated_features": 10749,
+        "latency_seconds_mean": 1.1084846980285497,
+        "latency_seconds_total": 587.4968899551313,
+        "wall_seconds_total": 734.4314531178679,
+        "scenes": 530,
+        "missing_predictions": 0,
+        "prediction_errors": 0,
+        "accuracy_real": 0.9958246346555324,
+        "scene_exact_match_real": 0.9666666666666667,
+        "scenes_real": 30,
+        "accuracy_synthetic": 1.0,
+        "scene_exact_match_synthetic": 1.0,
+        "scenes_synthetic": 500,
+        "runner_predict_seconds": 734.4,
+        "runner_seconds_per_scene": 1.386,
+        "scene_timeouts": 0,
+        "skipped_scenes": 0
+      }
     }
   ],
-  "updated_at": "2026-11-06T10:25:55+00:00",
+  "updated_at": "2026-11-06T12:53:40+00:00",
   "baselines": [
     {
       "team_id": "organizers",
