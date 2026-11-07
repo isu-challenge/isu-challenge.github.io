@@ -618,9 +618,41 @@
         "scene_timeouts": 0,
         "skipped_scenes": 0
       }
+    },
+    {
+      "team_id": "iut-event-horizon",
+      "display_name": "IUT_event_horizon",
+      "track": "track_b",
+      "pull_request": 20,
+      "commit": "b432aa632c9f197155ac79d0ce1ef8a8fbeb9768",
+      "evaluated_at": "2026-11-07T18:06:50+00:00",
+      "hardware": "NVIDIA L4",
+      "evaluator_ref": "5b304e5b7330c4dab86dc08a64c4d4b73a5143dc",
+      "metrics": {
+        "accuracy": 0.9999069680900549,
+        "scene_exact_match": 0.9981132075471698,
+        "correct_features": 10748,
+        "evaluated_features": 10749,
+        "latency_seconds_mean": 0.20104479840780906,
+        "latency_seconds_total": 106.55374315613881,
+        "wall_seconds_total": 143.8349283139687,
+        "scenes": 530,
+        "missing_predictions": 0,
+        "prediction_errors": 0,
+        "accuracy_real": 0.9979123173277662,
+        "scene_exact_match_real": 0.9666666666666667,
+        "scenes_real": 30,
+        "accuracy_synthetic": 1.0,
+        "scene_exact_match_synthetic": 1.0,
+        "scenes_synthetic": 500,
+        "runner_predict_seconds": 143.8,
+        "runner_seconds_per_scene": 0.271,
+        "scene_timeouts": 0,
+        "skipped_scenes": 0
+      }
     }
   ],
-  "updated_at": "2026-11-07T17:13:47+00:00",
+  "updated_at": "2026-11-07T18:07:15+00:00",
   "baselines": [
     {
       "team_id": "organizers",
