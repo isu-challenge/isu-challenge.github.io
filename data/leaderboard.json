@@ -938,9 +938,50 @@
         "scene_timeouts": 0,
         "skipped_scenes": 0
       }
+    },
+    {
+      "team_id": "no-27",
+      "display_name": "Mangojump",
+      "track": "track_a",
+      "pull_request": 22,
+      "commit": "42d8041b4909ed35a98aa3e7afd1892c1d859687",
+      "evaluated_at": "2026-11-10T07:57:30+00:00",
+      "hardware": "NVIDIA L4",
+      "evaluator_ref": "5b304e5b7330c4dab86dc08a64c4d4b73a5143dc",
+      "metrics": {
+        "scene_failure_rate": 1.0,
+        "feature_failure_rate": 0.22894736842105262,
+        "failures": 30,
+        "executed_scenes": 30,
+        "feature_diversity": 0.23365599917324054,
+        "clip_visual_diversity": 0.16712477803230286,
+        "sam_matched_iou": 0.6807863668700208,
+        "sam_boundary_f1": 0.7512572252089328,
+        "semantic_segmentation_score": 0.31921363312997914,
+        "generation_seconds_per_scene": 60.300462615202804,
+        "scenes": 30,
+        "untranslated_scenes": 0,
+        "scene_timeouts": 0,
+        "realism_exact_match": 0.0,
+        "realism_correlation_coefficient": 0.6793765720372912,
+        "realism_histogram_intersection": 0.737167566872428,
+        "realism_lbp_histogram_similarity": 0.7678869598765432,
+        "realism_psnr": 12.124752734987606,
+        "realism_ssim": 0.43396155997534736,
+        "realism_normalized_mutual_information": 0.10685985380091909,
+        "realism_fractal_dimension_similarity": 0.9898865300154471,
+        "realism_kl_divergence": 0.5386913588070062,
+        "realism_mse": 4175.266299361282,
+        "realism_vgg_perceptual_distance": 0.7252664973338445,
+        "realism_glcm_texture_distance": 25.285018814085834,
+        "realism_wasserstein_distance": 25.16856839420439,
+        "realism_inception_score_mean": 1.2970898151397705,
+        "realism_fid": 142.79434204101562,
+        "realism_kid_mean": 0.1031334400177002
+      }
     }
   ],
-  "updated_at": "2026-11-09T18:54:28+00:00",
+  "updated_at": "2026-11-10T07:57:52+00:00",
   "baselines": [
     {
       "team_id": "organizers",
