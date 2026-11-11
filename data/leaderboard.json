@@ -1335,9 +1335,41 @@
         "realism_fid": 156.76358032226562,
         "realism_kid_mean": 0.1199631616473198
       }
+    },
+    {
+      "team_id": "eesh",
+      "display_name": "EESH",
+      "track": "track_b",
+      "pull_request": 11,
+      "commit": "d6e7f1cd4cda4045afcc0efc4b7d2a1e0a442244",
+      "evaluated_at": "2026-11-11T16:37:59+00:00",
+      "hardware": "NVIDIA L4",
+      "evaluator_ref": "5b304e5b7330c4dab86dc08a64c4d4b73a5143dc",
+      "metrics": {
+        "accuracy": 0.9928365429342264,
+        "scene_exact_match": 0.8830188679245283,
+        "correct_features": 10672,
+        "evaluated_features": 10749,
+        "latency_seconds_mean": 1.7230905634219285,
+        "latency_seconds_total": 913.237998613622,
+        "wall_seconds_total": 1065.460712020984,
+        "scenes": 530,
+        "missing_predictions": 0,
+        "prediction_errors": 0,
+        "accuracy_real": 0.9248434237995825,
+        "scene_exact_match_real": 0.2,
+        "scenes_real": 30,
+        "accuracy_synthetic": 0.9960077896786758,
+        "scene_exact_match_synthetic": 0.924,
+        "scenes_synthetic": 500,
+        "runner_predict_seconds": 1065.5,
+        "runner_seconds_per_scene": 2.01,
+        "scene_timeouts": 0,
+        "skipped_scenes": 0
+      }
     }
   ],
-  "updated_at": "2026-11-11T15:18:25+00:00",
+  "updated_at": "2026-11-11T16:38:31+00:00",
   "baselines": [
     {
       "team_id": "organizers",
