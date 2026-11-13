@@ -1951,9 +1951,50 @@
         "scene_timeouts": 0,
         "skipped_scenes": 0
       }
+    },
+    {
+      "team_id": "no-27",
+      "display_name": "Mangojump",
+      "track": "track_a",
+      "pull_request": 22,
+      "commit": "0de6edfca932c3ed91906116e3f4a2beddb8f591",
+      "evaluated_at": "2026-11-13T18:42:00+00:00",
+      "hardware": "NVIDIA L4",
+      "evaluator_ref": "5b304e5b7330c4dab86dc08a64c4d4b73a5143dc",
+      "metrics": {
+        "scene_failure_rate": 0.9333333333333333,
+        "feature_failure_rate": 0.1868421052631579,
+        "failures": 28,
+        "executed_scenes": 30,
+        "feature_diversity": 0.23154446963970773,
+        "clip_visual_diversity": 0.08027200400829315,
+        "sam_matched_iou": 0.6463514489208501,
+        "sam_boundary_f1": 0.6853567359090285,
+        "semantic_segmentation_score": 0.3536485510791499,
+        "generation_seconds_per_scene": 4.0226935165623825,
+        "scenes": 30,
+        "untranslated_scenes": 0,
+        "scene_timeouts": 0,
+        "realism_exact_match": 0.0,
+        "realism_correlation_coefficient": 0.7985105160460182,
+        "realism_histogram_intersection": 0.8491104466735254,
+        "realism_lbp_histogram_similarity": 0.9356793981481482,
+        "realism_psnr": 14.576505350996127,
+        "realism_ssim": 0.5166750867841443,
+        "realism_normalized_mutual_information": 0.14502019014173112,
+        "realism_fractal_dimension_similarity": 0.9927380814791121,
+        "realism_kl_divergence": 0.12928603435321115,
+        "realism_mse": 2284.733725587277,
+        "realism_vgg_perceptual_distance": 0.6300014714399974,
+        "realism_glcm_texture_distance": 3.7943374150196028,
+        "realism_wasserstein_distance": 12.548888353052108,
+        "realism_inception_score_mean": 1.2329432964324951,
+        "realism_fid": 140.8226318359375,
+        "realism_kid_mean": 0.13924536108970642
+      }
     }
   ],
-  "updated_at": "2026-11-13T16:08:37+00:00",
+  "updated_at": "2026-11-13T18:42:15+00:00",
   "baselines": [
     {
       "team_id": "organizers",
