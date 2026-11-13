@@ -1796,9 +1796,50 @@
         "scene_timeouts": 0,
         "skipped_scenes": 0
       }
+    },
+    {
+      "team_id": "iut-event-horizon",
+      "display_name": "IUT_event_horizon",
+      "track": "track_a",
+      "pull_request": 19,
+      "commit": "fb46189a246917f92083c5290937bf50edc5fbef",
+      "evaluated_at": "2026-11-13T08:12:26+00:00",
+      "hardware": "NVIDIA L4",
+      "evaluator_ref": "5b304e5b7330c4dab86dc08a64c4d4b73a5143dc",
+      "metrics": {
+        "scene_failure_rate": 1.0,
+        "feature_failure_rate": 0.32894736842105265,
+        "failures": 30,
+        "executed_scenes": 30,
+        "feature_diversity": 0.23365599917324054,
+        "clip_visual_diversity": 0.09910960495471954,
+        "sam_matched_iou": 0.7076465113664255,
+        "sam_boundary_f1": 0.782465396285245,
+        "semantic_segmentation_score": 0.2923534886335743,
+        "generation_seconds_per_scene": 47.437062870012596,
+        "scenes": 30,
+        "untranslated_scenes": 0,
+        "scene_timeouts": 0,
+        "realism_exact_match": 0.0,
+        "realism_correlation_coefficient": 0.740736158686763,
+        "realism_histogram_intersection": 0.7843159293552813,
+        "realism_lbp_histogram_similarity": 0.9333836805555557,
+        "realism_psnr": 13.695389743301252,
+        "realism_ssim": 0.5166105952121877,
+        "realism_normalized_mutual_information": 0.12525302182837653,
+        "realism_fractal_dimension_similarity": 0.9854780308024492,
+        "realism_kl_divergence": 0.26528260946490423,
+        "realism_mse": 2799.6836575574416,
+        "realism_vgg_perceptual_distance": 0.665484215815862,
+        "realism_glcm_texture_distance": 4.279691935819164,
+        "realism_wasserstein_distance": 17.469063078703712,
+        "realism_inception_score_mean": 1.1823666095733643,
+        "realism_fid": 135.60903930664062,
+        "realism_kid_mean": 0.12330766022205353
+      }
     }
   ],
-  "updated_at": "2026-11-13T05:45:06+00:00",
+  "updated_at": "2026-11-13T08:12:50+00:00",
   "baselines": [
     {
       "team_id": "organizers",
