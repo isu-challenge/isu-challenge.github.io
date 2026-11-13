@@ -1764,9 +1764,41 @@
         "realism_fid": 135.647216796875,
         "realism_kid_mean": 0.1243734285235405
       }
+    },
+    {
+      "team_id": "carla",
+      "display_name": "Carla",
+      "track": "track_b",
+      "pull_request": 24,
+      "commit": "778eec318f5d2c9a530c546f0ca1cfff09765fdb",
+      "evaluated_at": "2026-11-13T05:44:47+00:00",
+      "hardware": "NVIDIA L4",
+      "evaluator_ref": "5b304e5b7330c4dab86dc08a64c4d4b73a5143dc",
+      "metrics": {
+        "accuracy": 0.9987905851707135,
+        "scene_exact_match": 0.9754716981132076,
+        "correct_features": 10736,
+        "evaluated_features": 10749,
+        "latency_seconds_mean": 0.06964123891666532,
+        "latency_seconds_total": 36.90985662583262,
+        "wall_seconds_total": 48.04962478717789,
+        "scenes": 530,
+        "missing_predictions": 0,
+        "prediction_errors": 0,
+        "accuracy_real": 0.9832985386221295,
+        "scene_exact_match_real": 0.7333333333333333,
+        "scenes_real": 30,
+        "accuracy_synthetic": 0.9995131450827653,
+        "scene_exact_match_synthetic": 0.99,
+        "scenes_synthetic": 500,
+        "runner_predict_seconds": 48.0,
+        "runner_seconds_per_scene": 0.091,
+        "scene_timeouts": 0,
+        "skipped_scenes": 0
+      }
     }
   ],
-  "updated_at": "2026-11-12T19:05:29+00:00",
+  "updated_at": "2026-11-13T05:45:06+00:00",
   "baselines": [
     {
       "team_id": "organizers",
