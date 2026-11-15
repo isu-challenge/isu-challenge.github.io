@@ -426,6 +426,7 @@
   .lb-table th{font-family:var(--font-mono);font-size:11.5px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;}
   .lb-table th:nth-child(2),.lb-table td:nth-child(2){text-align:left;}
   .lb-table td.num{font-family:var(--font-mono);}
+  .lb-table th .lb-dir{margin-left:4px;font-family:var(--font-body,inherit);color:var(--accent);cursor:help;}
   .lb-table tbody tr:first-child td{color:var(--accent);font-weight:600;}
   .lb-table tfoot td{color:var(--muted);font-style:italic;}
   .lb-table tfoot tr:first-child td{border-top:2px solid var(--line);}
@@ -909,15 +910,17 @@
      pareto: {objectives: [['scene_failure_rate', 'max'], ['realism', 'max'], ['feature_diversity', 'max'],
                            ['generation_seconds_per_scene', 'min']],
               weights: {scene_failure_rate: 0.3, realism: 0.4, feature_diversity: 0.3}},
-     columns: [['scene_failure_rate', 'Scene failure', 'pct'], ['feature_failure_rate', 'Feature failure', 'pct'],
-               ['realism', 'Realism', 3], ['feature_diversity', 'Diversity', 3],
-               ['generation_seconds_per_scene', 's / scene', 2]]},
+     // [metric key, header, digits, better direction]
+     columns: [['scene_failure_rate', 'Scene failure', 'pct', 'max'],
+               ['feature_failure_rate', 'Feature failure', 'pct', 'max'],
+               ['realism', 'Realism', 3, 'max'], ['feature_diversity', 'Diversity', 3, 'max'],
+               ['generation_seconds_per_scene', 's / scene', 2, 'min']]},
     {id: 'track_b', title: 'Track B — System Development', sort: 'accuracy',
      note: 'Ordered by feature accuracy over all evaluated scenes; seconds per scene are measured by the ' +
            'organizers for the whole prediction run, including model loading.',
-     columns: [['accuracy', 'Feature acc.', 'pct'], ['accuracy_real', 'Real', 'pct'],
-               ['accuracy_synthetic', 'Synthetic', 'pct'], ['scene_exact_match', 'Scene exact', 'pct'],
-               ['runner_seconds_per_scene', 's / scene', 2]]}
+     columns: [['accuracy', 'Feature acc.', 'pct', 'max'], ['accuracy_real', 'Real', 'pct', 'max'],
+               ['accuracy_synthetic', 'Synthetic', 'pct', 'max'], ['scene_exact_match', 'Scene exact', 'pct', 'max'],
+               ['runner_seconds_per_scene', 's / scene', 2, 'min']]}
   ];
 
   function el(tag, text, className) {
@@ -1059,9 +1062,19 @@
   function table(track, rows, baselines) {
     var table = el('table', null, 'lb-table');
     var headRow = el('tr');
-    ['#', 'Team'].concat(track.pareto ? ['Front'] : [], track.columns.map(function(c) { return c[1]; }),
-                         ['Evaluated', 'Hardware'])
-      .forEach(function(label) { headRow.appendChild(el('th', label)); });
+    // [label, direction]: 'max' adds ↑ (higher is better), 'min' adds ↓ (lower is better).
+    [['#'], ['Team']].concat(track.pareto ? [['Front', 'min']] : [],
+                             track.columns.map(function(c) { return [c[1], c[3]]; }),
+                             [['Evaluated'], ['Hardware']])
+      .forEach(function(head) {
+        var cell = el('th', head[0]);
+        if (head[1]) {
+          var max = head[1] === 'max';
+          cell.appendChild(el('span', max ? '↑' : '↓', 'lb-dir'));
+          cell.title = max ? 'Higher is better' : 'Lower is better';
+        }
+        headRow.appendChild(cell);
+      });
     table.appendChild(el('thead')).appendChild(headRow);
     var body = el('tbody');
     rows.forEach(function(entry, index) {
