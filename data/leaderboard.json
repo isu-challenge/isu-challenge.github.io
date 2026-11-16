@@ -2252,9 +2252,50 @@
         "realism_fid": 139.84901428222656,
         "realism_kid_mean": 0.1343684047460556
       }
+    },
+    {
+      "team_id": "cast",
+      "display_name": "CAST",
+      "track": "track_a",
+      "pull_request": 23,
+      "commit": "34051c19aab8da58b643e2c91a8474eb9457e912",
+      "evaluated_at": "2026-11-16T09:13:19+00:00",
+      "hardware": "NVIDIA L4",
+      "evaluator_ref": "5b304e5b7330c4dab86dc08a64c4d4b73a5143dc",
+      "metrics": {
+        "scene_failure_rate": 0.9666666666666667,
+        "feature_failure_rate": 0.15526315789473685,
+        "failures": 29,
+        "executed_scenes": 30,
+        "feature_diversity": 0.23385071414628064,
+        "clip_visual_diversity": 0.12277398258447647,
+        "sam_matched_iou": 0.6320917604132525,
+        "sam_boundary_f1": 0.7281014096638169,
+        "semantic_segmentation_score": 0.36790823958674757,
+        "generation_seconds_per_scene": 29.372267945995553,
+        "scenes": 30,
+        "untranslated_scenes": 0,
+        "scene_timeouts": 0,
+        "realism_exact_match": 0.0,
+        "realism_correlation_coefficient": 0.7993609619463976,
+        "realism_histogram_intersection": 0.7490159679355283,
+        "realism_lbp_histogram_similarity": 0.8891389531893004,
+        "realism_psnr": 14.604721334337835,
+        "realism_ssim": 0.531579904699923,
+        "realism_normalized_mutual_information": 0.15266473084464594,
+        "realism_fractal_dimension_similarity": 0.9904109486510353,
+        "realism_kl_divergence": 0.2967549713501056,
+        "realism_mse": 2429.4325964506165,
+        "realism_vgg_perceptual_distance": 0.6479916552702586,
+        "realism_glcm_texture_distance": 13.08183602184646,
+        "realism_wasserstein_distance": 19.713659122085044,
+        "realism_inception_score_mean": 1.4227689504623413,
+        "realism_fid": 154.73330688476562,
+        "realism_kid_mean": 0.11011147499084473
+      }
     }
   ],
-  "updated_at": "2026-11-15T17:07:52+00:00",
+  "updated_at": "2026-11-16T09:13:50+00:00",
   "baselines": [
     {
       "team_id": "organizers",
