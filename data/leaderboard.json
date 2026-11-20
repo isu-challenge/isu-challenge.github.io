@@ -2877,9 +2877,50 @@
         "scene_timeouts": 0,
         "skipped_scenes": 0
       }
+    },
+    {
+      "team_id": "team-36",
+      "display_name": "Kuan-Lin Chen",
+      "track": "track_a",
+      "pull_request": 28,
+      "commit": "1d2a4b8e1a0ac447faf12d2414c760c055e2795d",
+      "evaluated_at": "2026-11-20T11:07:10+00:00",
+      "hardware": "NVIDIA L4",
+      "evaluator_ref": "5b304e5b7330c4dab86dc08a64c4d4b73a5143dc",
+      "metrics": {
+        "scene_failure_rate": 0.9,
+        "feature_failure_rate": 0.21842105263157896,
+        "failures": 27,
+        "executed_scenes": 30,
+        "feature_diversity": 0.21283654616987951,
+        "clip_visual_diversity": 0.14450912177562714,
+        "sam_matched_iou": 0.6183095851704897,
+        "sam_boundary_f1": 0.7391180355973931,
+        "semantic_segmentation_score": 0.38169041482951027,
+        "generation_seconds_per_scene": 15.524743427988142,
+        "scenes": 30,
+        "untranslated_scenes": 0,
+        "scene_timeouts": 0,
+        "realism_exact_match": 0.0,
+        "realism_correlation_coefficient": 0.8092453393596417,
+        "realism_histogram_intersection": 0.7994992069615912,
+        "realism_lbp_histogram_similarity": 0.8994416152263375,
+        "realism_psnr": 15.396776098350806,
+        "realism_ssim": 0.5262579842000987,
+        "realism_normalized_mutual_information": 0.15080886054475146,
+        "realism_fractal_dimension_similarity": 0.9915218201555906,
+        "realism_kl_divergence": 0.16679660537983174,
+        "realism_mse": 1899.5830616212281,
+        "realism_vgg_perceptual_distance": 0.6795417567094167,
+        "realism_glcm_texture_distance": 5.879062645180018,
+        "realism_wasserstein_distance": 12.666359117798345,
+        "realism_inception_score_mean": 1.3074487447738647,
+        "realism_fid": 136.74197387695312,
+        "realism_kid_mean": 0.1080670952796936
+      }
     }
   ],
-  "updated_at": "2026-11-19T18:02:38+00:00",
+  "updated_at": "2026-11-20T11:07:33+00:00",
   "baselines": [
     {
       "team_id": "organizers",
