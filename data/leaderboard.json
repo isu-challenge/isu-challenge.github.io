@@ -3365,9 +3365,41 @@
         "realism_fid": 129.55352783203125,
         "realism_kid_mean": 0.11171040683984756
       }
+    },
+    {
+      "team_id": "team-38",
+      "display_name": "Tokyoglice",
+      "track": "track_b",
+      "pull_request": 31,
+      "commit": "c94bb4a878eb0d3f6d40c43a86329d93fea06397",
+      "evaluated_at": "2026-11-21T04:16:46+00:00",
+      "hardware": "NVIDIA L4",
+      "evaluator_ref": "5b304e5b7330c4dab86dc08a64c4d4b73a5143dc",
+      "metrics": {
+        "accuracy": 0.9984184575309331,
+        "scene_exact_match": 0.969811320754717,
+        "correct_features": 10732,
+        "evaluated_features": 10749,
+        "latency_seconds_mean": 0.36590307414496565,
+        "latency_seconds_total": 193.9286292968318,
+        "wall_seconds_total": 203.15902244206518,
+        "scenes": 530,
+        "missing_predictions": 0,
+        "prediction_errors": 0,
+        "accuracy_real": 0.9770354906054279,
+        "scene_exact_match_real": 0.6666666666666666,
+        "scenes_real": 30,
+        "accuracy_synthetic": 0.9994157740993184,
+        "scene_exact_match_synthetic": 0.988,
+        "scenes_synthetic": 500,
+        "runner_predict_seconds": 203.2,
+        "runner_seconds_per_scene": 0.383,
+        "scene_timeouts": 0,
+        "skipped_scenes": 0
+      }
     }
   ],
-  "updated_at": "2026-11-21T03:33:25+00:00",
+  "updated_at": "2026-11-21T04:17:10+00:00",
   "baselines": [
     {
       "team_id": "organizers",
