@@ -3397,9 +3397,50 @@
         "scene_timeouts": 0,
         "skipped_scenes": 0
       }
+    },
+    {
+      "team_id": "no-27",
+      "display_name": "Mangojump",
+      "track": "track_a",
+      "pull_request": 22,
+      "commit": "911e5c00857ce05f4e3747db4e6e6e441f905a27",
+      "evaluated_at": "2026-11-21T04:43:02+00:00",
+      "hardware": "NVIDIA L4",
+      "evaluator_ref": "5b304e5b7330c4dab86dc08a64c4d4b73a5143dc",
+      "metrics": {
+        "scene_failure_rate": 1.0,
+        "feature_failure_rate": 0.2,
+        "failures": 30,
+        "executed_scenes": 30,
+        "feature_diversity": 0.23365599917324054,
+        "clip_visual_diversity": 0.09097982943058014,
+        "sam_matched_iou": 0.643826469858606,
+        "sam_boundary_f1": 0.7029781894960462,
+        "semantic_segmentation_score": 0.35617353014139386,
+        "generation_seconds_per_scene": 8.35356940110214,
+        "scenes": 30,
+        "untranslated_scenes": 0,
+        "scene_timeouts": 0,
+        "realism_exact_match": 0.0,
+        "realism_correlation_coefficient": 0.7959549885384173,
+        "realism_histogram_intersection": 0.88084670781893,
+        "realism_lbp_histogram_similarity": 0.9298939686213992,
+        "realism_psnr": 15.21790402522508,
+        "realism_ssim": 0.5358224455937844,
+        "realism_normalized_mutual_information": 0.1497122489536279,
+        "realism_fractal_dimension_similarity": 0.990727143572259,
+        "realism_kl_divergence": 0.07142577047296757,
+        "realism_mse": 1992.6858988768863,
+        "realism_vgg_perceptual_distance": 0.6323629001776377,
+        "realism_glcm_texture_distance": 7.120385535554964,
+        "realism_wasserstein_distance": 6.610478995198887,
+        "realism_inception_score_mean": 1.19107985496521,
+        "realism_fid": 142.44578552246094,
+        "realism_kid_mean": 0.13328106701374054
+      }
     }
   ],
-  "updated_at": "2026-11-21T04:17:10+00:00",
+  "updated_at": "2026-11-21T04:43:23+00:00",
   "baselines": [
     {
       "team_id": "organizers",
