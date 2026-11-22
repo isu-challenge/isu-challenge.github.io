@@ -3885,9 +3885,50 @@
         "scene_timeouts": 0,
         "skipped_scenes": 0
       }
+    },
+    {
+      "team_id": "team-36",
+      "display_name": "Kuan-Lin Chen",
+      "track": "track_a",
+      "pull_request": 28,
+      "commit": "e750cdff0aa6163bd6354c68f4fb314cce1d74bf",
+      "evaluated_at": "2026-11-22T12:46:24+00:00",
+      "hardware": "NVIDIA L4",
+      "evaluator_ref": "5b304e5b7330c4dab86dc08a64c4d4b73a5143dc",
+      "metrics": {
+        "scene_failure_rate": 0.9666666666666667,
+        "feature_failure_rate": 0.22894736842105262,
+        "failures": 29,
+        "executed_scenes": 30,
+        "feature_diversity": 0.22840213973218898,
+        "clip_visual_diversity": 0.13171212375164032,
+        "sam_matched_iou": 0.606942464755933,
+        "sam_boundary_f1": 0.7183838827270465,
+        "semantic_segmentation_score": 0.39305753524406717,
+        "generation_seconds_per_scene": 23.02653348680275,
+        "scenes": 30,
+        "untranslated_scenes": 0,
+        "scene_timeouts": 0,
+        "realism_exact_match": 0.0,
+        "realism_correlation_coefficient": 0.81824657404923,
+        "realism_histogram_intersection": 0.8396270790466391,
+        "realism_lbp_histogram_similarity": 0.9034650205761319,
+        "realism_psnr": 15.709977054570711,
+        "realism_ssim": 0.5296590323236025,
+        "realism_normalized_mutual_information": 0.15241161381353485,
+        "realism_fractal_dimension_similarity": 0.9923733840961846,
+        "realism_kl_divergence": 0.10898242682708834,
+        "realism_mse": 1760.7234130015431,
+        "realism_vgg_perceptual_distance": 0.6747161040703455,
+        "realism_glcm_texture_distance": 3.9637015923055468,
+        "realism_wasserstein_distance": 8.13402694187243,
+        "realism_inception_score_mean": 1.314795732498169,
+        "realism_fid": 139.91600036621094,
+        "realism_kid_mean": 0.11277768760919571
+      }
     }
   ],
-  "updated_at": "2026-11-22T09:50:14+00:00",
+  "updated_at": "2026-11-22T12:46:54+00:00",
   "baselines": [
     {
       "team_id": "organizers",
