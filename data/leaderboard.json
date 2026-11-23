@@ -4387,9 +4387,50 @@
         "scene_timeouts": 0,
         "skipped_scenes": 0
       }
+    },
+    {
+      "team_id": "team-36",
+      "display_name": "Kuan-Lin Chen",
+      "track": "track_a",
+      "pull_request": 28,
+      "commit": "47a409aa9d79a36221be8f4a95175034b67d506f",
+      "evaluated_at": "2026-11-23T13:33:51+00:00",
+      "hardware": "NVIDIA L4",
+      "evaluator_ref": "5b304e5b7330c4dab86dc08a64c4d4b73a5143dc",
+      "metrics": {
+        "scene_failure_rate": 0.9666666666666667,
+        "feature_failure_rate": 0.21052631578947367,
+        "failures": 29,
+        "executed_scenes": 30,
+        "feature_diversity": 0.22840213973218898,
+        "clip_visual_diversity": 0.1321468949317932,
+        "sam_matched_iou": 0.6070654373544421,
+        "sam_boundary_f1": 0.7029489614849458,
+        "semantic_segmentation_score": 0.392934562645558,
+        "generation_seconds_per_scene": 18.44976890796485,
+        "scenes": 30,
+        "untranslated_scenes": 0,
+        "scene_timeouts": 0,
+        "realism_exact_match": 0.0,
+        "realism_correlation_coefficient": 0.8192509631190495,
+        "realism_histogram_intersection": 0.8984159379286694,
+        "realism_lbp_histogram_similarity": 0.9291828703703703,
+        "realism_psnr": 15.71593340057965,
+        "realism_ssim": 0.5337380821821466,
+        "realism_normalized_mutual_information": 0.1532373566002492,
+        "realism_fractal_dimension_similarity": 0.9924094797990158,
+        "realism_kl_divergence": 0.04770760802149853,
+        "realism_mse": 1758.7778587319958,
+        "realism_vgg_perceptual_distance": 0.6800655295451482,
+        "realism_glcm_texture_distance": 3.192410286814649,
+        "realism_wasserstein_distance": 6.127497920953356,
+        "realism_inception_score_mean": 1.244012475013733,
+        "realism_fid": 138.46359252929688,
+        "realism_kid_mean": 0.11807680130004883
+      }
     }
   ],
-  "updated_at": "2026-11-23T11:23:59+00:00",
+  "updated_at": "2026-11-23T13:34:17+00:00",
   "baselines": [
     {
       "team_id": "organizers",
