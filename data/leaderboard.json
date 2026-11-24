@@ -2710,38 +2710,6 @@
       }
     },
     {
-      "team_id": "no-27",
-      "display_name": "Mangojump",
-      "track": "track_b",
-      "pull_request": 18,
-      "commit": "35acd2b73f8cd25e9941947bd5a40bd0f3a9b064",
-      "evaluated_at": "2026-11-19T18:02:20+00:00",
-      "hardware": "NVIDIA L4",
-      "evaluator_ref": "5b304e5b7330c4dab86dc08a64c4d4b73a5143dc",
-      "metrics": {
-        "accuracy": 1.0,
-        "scene_exact_match": 1.0,
-        "correct_features": 10749,
-        "evaluated_features": 10749,
-        "latency_seconds_mean": 0.05023114748193689,
-        "latency_seconds_total": 26.622508165426552,
-        "wall_seconds_total": 34.07639055280015,
-        "scenes": 530,
-        "missing_predictions": 0,
-        "prediction_errors": 0,
-        "accuracy_real": 1.0,
-        "scene_exact_match_real": 1.0,
-        "scenes_real": 30,
-        "accuracy_synthetic": 1.0,
-        "scene_exact_match_synthetic": 1.0,
-        "scenes_synthetic": 500,
-        "runner_predict_seconds": 34.1,
-        "runner_seconds_per_scene": 0.064,
-        "scene_timeouts": 0,
-        "skipped_scenes": 0
-      }
-    },
-    {
       "team_id": "team-36",
       "display_name": "Kuan-Lin Chen",
       "track": "track_a",
@@ -4896,9 +4864,41 @@
         "scene_timeouts": 0,
         "skipped_scenes": 0
       }
+    },
+    {
+      "team_id": "no-27",
+      "display_name": "Mangojump",
+      "track": "track_b",
+      "pull_request": 18,
+      "commit": "35acd2b73f8cd25e9941947bd5a40bd0f3a9b064",
+      "evaluated_at": "2026-11-24T16:06:48+00:00",
+      "hardware": "NVIDIA L4",
+      "evaluator_ref": "2c0e78616029b60cdd47ebfc5596dc25ed9039e5",
+      "metrics": {
+        "accuracy": 1.0,
+        "scene_exact_match": 1.0,
+        "correct_features": 10749,
+        "evaluated_features": 10749,
+        "latency_seconds_mean": 0.050176998157546206,
+        "latency_seconds_total": 26.59380902349949,
+        "wall_seconds_total": 34.0865042489022,
+        "scenes": 530,
+        "missing_predictions": 0,
+        "prediction_errors": 0,
+        "accuracy_real": 1.0,
+        "scene_exact_match_real": 1.0,
+        "scenes_real": 30,
+        "accuracy_synthetic": 1.0,
+        "scene_exact_match_synthetic": 1.0,
+        "scenes_synthetic": 500,
+        "runner_predict_seconds": 34.1,
+        "runner_seconds_per_scene": 0.064,
+        "scene_timeouts": 0,
+        "skipped_scenes": 0
+      }
     }
   ],
-  "updated_at": "2026-11-24T15:50:50+00:00",
+  "updated_at": "2026-11-24T16:07:10+00:00",
   "baselines": [
     {
       "team_id": "organizers",
