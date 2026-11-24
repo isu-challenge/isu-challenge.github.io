@@ -1766,38 +1766,6 @@
       }
     },
     {
-      "team_id": "carla",
-      "display_name": "Carla",
-      "track": "track_b",
-      "pull_request": 24,
-      "commit": "778eec318f5d2c9a530c546f0ca1cfff09765fdb",
-      "evaluated_at": "2026-11-13T05:44:47+00:00",
-      "hardware": "NVIDIA L4",
-      "evaluator_ref": "5b304e5b7330c4dab86dc08a64c4d4b73a5143dc",
-      "metrics": {
-        "accuracy": 0.9987905851707135,
-        "scene_exact_match": 0.9754716981132076,
-        "correct_features": 10736,
-        "evaluated_features": 10749,
-        "latency_seconds_mean": 0.06964123891666532,
-        "latency_seconds_total": 36.90985662583262,
-        "wall_seconds_total": 48.04962478717789,
-        "scenes": 530,
-        "missing_predictions": 0,
-        "prediction_errors": 0,
-        "accuracy_real": 0.9832985386221295,
-        "scene_exact_match_real": 0.7333333333333333,
-        "scenes_real": 30,
-        "accuracy_synthetic": 0.9995131450827653,
-        "scene_exact_match_synthetic": 0.99,
-        "scenes_synthetic": 500,
-        "runner_predict_seconds": 48.0,
-        "runner_seconds_per_scene": 0.091,
-        "scene_timeouts": 0,
-        "skipped_scenes": 0
-      }
-    },
-    {
       "team_id": "iut-event-horizon",
       "display_name": "IUT_event_horizon",
       "track": "track_a",
@@ -4893,9 +4861,41 @@
         "scene_timeouts": 0,
         "skipped_scenes": 0
       }
+    },
+    {
+      "team_id": "carla",
+      "display_name": "Carla",
+      "track": "track_b",
+      "pull_request": 24,
+      "commit": "778eec318f5d2c9a530c546f0ca1cfff09765fdb",
+      "evaluated_at": "2026-11-24T14:06:44+00:00",
+      "hardware": "NVIDIA L4",
+      "evaluator_ref": "2c0e78616029b60cdd47ebfc5596dc25ed9039e5",
+      "metrics": {
+        "accuracy": 0.9987905851707135,
+        "scene_exact_match": 0.9754716981132076,
+        "correct_features": 10736,
+        "evaluated_features": 10749,
+        "latency_seconds_mean": 0.07242012300423153,
+        "latency_seconds_total": 38.38266519224271,
+        "wall_seconds_total": 50.662868374958634,
+        "scenes": 530,
+        "missing_predictions": 0,
+        "prediction_errors": 0,
+        "accuracy_real": 0.9832985386221295,
+        "scene_exact_match_real": 0.7333333333333333,
+        "scenes_real": 30,
+        "accuracy_synthetic": 0.9995131450827653,
+        "scene_exact_match_synthetic": 0.99,
+        "scenes_synthetic": 500,
+        "runner_predict_seconds": 50.7,
+        "runner_seconds_per_scene": 0.096,
+        "scene_timeouts": 0,
+        "skipped_scenes": 0
+      }
     }
   ],
-  "updated_at": "2026-11-24T14:01:34+00:00",
+  "updated_at": "2026-11-24T14:07:01+00:00",
   "baselines": [
     {
       "team_id": "organizers",
