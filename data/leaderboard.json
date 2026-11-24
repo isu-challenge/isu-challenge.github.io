@@ -2541,38 +2541,6 @@
       }
     },
     {
-      "team_id": "eesh",
-      "display_name": "EESH",
-      "track": "track_b",
-      "pull_request": 11,
-      "commit": "c66cc2a18108078500f7ad939d65113b541cfa1a",
-      "evaluated_at": "2026-11-17T18:02:48+00:00",
-      "hardware": "NVIDIA L4",
-      "evaluator_ref": "5b304e5b7330c4dab86dc08a64c4d4b73a5143dc",
-      "metrics": {
-        "accuracy": 0.9938598939436226,
-        "scene_exact_match": 0.8905660377358491,
-        "correct_features": 10683,
-        "evaluated_features": 10749,
-        "latency_seconds_mean": 1.8470866776264783,
-        "latency_seconds_total": 978.9559391420335,
-        "wall_seconds_total": 1132.5263931108639,
-        "scenes": 530,
-        "missing_predictions": 0,
-        "prediction_errors": 0,
-        "accuracy_real": 0.9478079331941545,
-        "scene_exact_match_real": 0.3333333333333333,
-        "scenes_real": 30,
-        "accuracy_synthetic": 0.9960077896786758,
-        "scene_exact_match_synthetic": 0.924,
-        "scenes_synthetic": 500,
-        "runner_predict_seconds": 1132.5,
-        "runner_seconds_per_scene": 2.137,
-        "scene_timeouts": 0,
-        "skipped_scenes": 0
-      }
-    },
-    {
       "team_id": "mergen",
       "display_name": "Mergen",
       "track": "track_b",
@@ -4896,9 +4864,41 @@
         "scene_timeouts": 0,
         "skipped_scenes": 0
       }
+    },
+    {
+      "team_id": "eesh",
+      "display_name": "EESH",
+      "track": "track_b",
+      "pull_request": 11,
+      "commit": "c66cc2a18108078500f7ad939d65113b541cfa1a",
+      "evaluated_at": "2026-11-24T17:01:45+00:00",
+      "hardware": "NVIDIA L4",
+      "evaluator_ref": "2c0e78616029b60cdd47ebfc5596dc25ed9039e5",
+      "metrics": {
+        "accuracy": 0.9938598939436226,
+        "scene_exact_match": 0.8905660377358491,
+        "correct_features": 10683,
+        "evaluated_features": 10749,
+        "latency_seconds_mean": 1.8534629082913459,
+        "latency_seconds_total": 982.3353413944133,
+        "wall_seconds_total": 1134.2571100289933,
+        "scenes": 530,
+        "missing_predictions": 0,
+        "prediction_errors": 0,
+        "accuracy_real": 0.9478079331941545,
+        "scene_exact_match_real": 0.3333333333333333,
+        "scenes_real": 30,
+        "accuracy_synthetic": 0.9960077896786758,
+        "scene_exact_match_synthetic": 0.924,
+        "scenes_synthetic": 500,
+        "runner_predict_seconds": 1134.3,
+        "runner_seconds_per_scene": 2.14,
+        "scene_timeouts": 0,
+        "skipped_scenes": 0
+      }
     }
   ],
-  "updated_at": "2026-11-24T16:17:53+00:00",
+  "updated_at": "2026-11-24T17:02:21+00:00",
   "baselines": [
     {
       "team_id": "organizers",
