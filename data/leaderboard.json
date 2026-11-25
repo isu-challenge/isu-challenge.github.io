@@ -5604,9 +5604,41 @@
         "realism_fid": 125.537109375,
         "realism_kid_mean": 0.10602904856204987
       }
+    },
+    {
+      "team_id": "invst-git",
+      "display_name": "invst-git",
+      "track": "track_b",
+      "pull_request": 38,
+      "commit": "4bc2a5665e7b0f0d4d888f302830849807d0092a",
+      "evaluated_at": "2026-11-25T16:59:14+00:00",
+      "hardware": "NVIDIA L4",
+      "evaluator_ref": "2c0e78616029b60cdd47ebfc5596dc25ed9039e5",
+      "metrics": {
+        "accuracy": 0.9999069680900549,
+        "scene_exact_match": 0.9981132075471698,
+        "correct_features": 10748,
+        "evaluated_features": 10749,
+        "latency_seconds_mean": 0.06666881088167428,
+        "latency_seconds_total": 35.33446976728737,
+        "wall_seconds_total": 46.74284451501444,
+        "scenes": 530,
+        "missing_predictions": 0,
+        "prediction_errors": 0,
+        "accuracy_real": 0.9979123173277662,
+        "scene_exact_match_real": 0.9666666666666667,
+        "scenes_real": 30,
+        "accuracy_synthetic": 1.0,
+        "scene_exact_match_synthetic": 1.0,
+        "scenes_synthetic": 500,
+        "runner_predict_seconds": 46.7,
+        "runner_seconds_per_scene": 0.088,
+        "scene_timeouts": 0,
+        "skipped_scenes": 0
+      }
     }
   ],
-  "updated_at": "2026-11-25T15:13:21+00:00",
+  "updated_at": "2026-11-25T16:59:34+00:00",
   "baselines": [
     {
       "team_id": "organizers",
