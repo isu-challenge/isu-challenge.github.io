@@ -5320,9 +5320,41 @@
         "scene_timeouts": 0,
         "skipped_scenes": 0
       }
+    },
+    {
+      "team_id": "mergen",
+      "display_name": "Mergen",
+      "track": "track_b",
+      "pull_request": 27,
+      "commit": "616cf9bed02c4f37e3b69860a02bf84b6b233567",
+      "evaluated_at": "2026-11-25T06:16:17+00:00",
+      "hardware": "NVIDIA L4",
+      "evaluator_ref": "2c0e78616029b60cdd47ebfc5596dc25ed9039e5",
+      "metrics": {
+        "accuracy": 0.9994418085403294,
+        "scene_exact_match": 0.9886792452830189,
+        "correct_features": 10743,
+        "evaluated_features": 10749,
+        "latency_seconds_mean": 0.07722777203867598,
+        "latency_seconds_total": 40.93071918049827,
+        "wall_seconds_total": 52.100728946272284,
+        "scenes": 530,
+        "missing_predictions": 0,
+        "prediction_errors": 0,
+        "accuracy_real": 0.9958246346555324,
+        "scene_exact_match_real": 0.9333333333333333,
+        "scenes_real": 30,
+        "accuracy_synthetic": 0.9996105160662123,
+        "scene_exact_match_synthetic": 0.992,
+        "scenes_synthetic": 500,
+        "runner_predict_seconds": 52.1,
+        "runner_seconds_per_scene": 0.098,
+        "scene_timeouts": 0,
+        "skipped_scenes": 0
+      }
     }
   ],
-  "updated_at": "2026-11-25T05:43:44+00:00",
+  "updated_at": "2026-11-25T06:16:32+00:00",
   "baselines": [
     {
       "team_id": "organizers",
