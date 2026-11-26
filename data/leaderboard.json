@@ -6756,9 +6756,41 @@
         "realism_fid": 157.9447021484375,
         "realism_kid_mean": 0.1804446429014206
       }
+    },
+    {
+      "team_id": "no-27",
+      "display_name": "Mangojump",
+      "track": "track_b",
+      "pull_request": 18,
+      "commit": "538e2ca68469cd622ae416dda4d82edc2943fefb",
+      "evaluated_at": "2026-11-26T17:47:51+00:00",
+      "hardware": "NVIDIA L4",
+      "evaluator_ref": "2c0e78616029b60cdd47ebfc5596dc25ed9039e5",
+      "metrics": {
+        "accuracy": 1.0,
+        "scene_exact_match": 1.0,
+        "correct_features": 10749,
+        "evaluated_features": 10749,
+        "latency_seconds_mean": 0.04755183479990695,
+        "latency_seconds_total": 25.202472443950683,
+        "wall_seconds_total": 32.895126191997406,
+        "scenes": 530,
+        "missing_predictions": 0,
+        "prediction_errors": 0,
+        "accuracy_real": 1.0,
+        "scene_exact_match_real": 1.0,
+        "scenes_real": 30,
+        "accuracy_synthetic": 1.0,
+        "scene_exact_match_synthetic": 1.0,
+        "scenes_synthetic": 500,
+        "runner_predict_seconds": 32.9,
+        "runner_seconds_per_scene": 0.062,
+        "scene_timeouts": 0,
+        "skipped_scenes": 0
+      }
     }
   ],
-  "updated_at": "2026-11-26T17:30:58+00:00",
+  "updated_at": "2026-11-26T17:48:14+00:00",
   "baselines": [
     {
       "team_id": "organizers",
