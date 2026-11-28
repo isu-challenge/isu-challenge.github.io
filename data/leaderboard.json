@@ -7800,9 +7800,41 @@
         "scene_timeouts": 0,
         "skipped_scenes": 0
       }
+    },
+    {
+      "team_id": "team-40",
+      "display_name": "DeLTA LAB",
+      "track": "track_b",
+      "pull_request": 40,
+      "commit": "b6e082ad88f14cca16ced0c71a6745dd65a35783",
+      "evaluated_at": "2026-11-28T04:01:14+00:00",
+      "hardware": "NVIDIA L4",
+      "evaluator_ref": "2c0e78616029b60cdd47ebfc5596dc25ed9039e5",
+      "metrics": {
+        "accuracy": 0.9985114894408782,
+        "scene_exact_match": 0.9773584905660377,
+        "correct_features": 10733,
+        "evaluated_features": 10749,
+        "latency_seconds_mean": 1.1889765064682336,
+        "latency_seconds_total": 630.1575484281639,
+        "wall_seconds_total": 660.851698576007,
+        "scenes": 530,
+        "missing_predictions": 0,
+        "prediction_errors": 0,
+        "accuracy_real": 0.9665970772442589,
+        "scene_exact_match_real": 0.6,
+        "scenes_real": 30,
+        "accuracy_synthetic": 1.0,
+        "scene_exact_match_synthetic": 1.0,
+        "scenes_synthetic": 500,
+        "runner_predict_seconds": 660.9,
+        "runner_seconds_per_scene": 1.247,
+        "scene_timeouts": 0,
+        "skipped_scenes": 0
+      }
     }
   ],
-  "updated_at": "2026-11-28T02:09:55+00:00",
+  "updated_at": "2026-11-28T04:01:30+00:00",
   "baselines": [
     {
       "team_id": "organizers",
